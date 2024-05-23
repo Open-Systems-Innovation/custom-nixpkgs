@@ -8,7 +8,7 @@ pkgs.stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "dev-env";
     rev = "main";
-    sha256 = "Desktop/dev_env_test/";
+    sha256 = "sha256-6NHSpxyMM3oOXCh2I1EYeRrZQRfC/XNsNWNwrastVtE=";
   };
 
   nativeBuildInputs = [ pkgs.python3 pkgs.direnv ];
