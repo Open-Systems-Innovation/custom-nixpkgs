@@ -4,7 +4,7 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "dev-env";
-  version = "1.0.0";
+  version = "0.0.1";
   format = "other";
 
   src = pkgs.fetchFromGitHub {
