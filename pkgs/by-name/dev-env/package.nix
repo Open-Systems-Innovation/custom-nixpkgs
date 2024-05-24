@@ -1,8 +1,11 @@
-{pkgs, ...}:
+{ pkgs,
+  python3Packages,
+  ...}:
 
-pkgs.stdenv.mkDerivation {
+python3Packages.buildPythonApplication rec {
   pname = "dev-env";
   version = "1.0.0";
+  format = "other";
 
   src = pkgs.fetchFromGitHub {
     owner = "Open-Systems-Innovation";
@@ -11,7 +14,8 @@ pkgs.stdenv.mkDerivation {
     sha256 = "sha256-6NHSpxyMM3oOXCh2I1EYeRrZQRfC/XNsNWNwrastVtE=";
   };
 
-  nativeBuildInputs = [ pkgs.python3 pkgs.direnv ];
+  propogatedBuildInputs = [
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
