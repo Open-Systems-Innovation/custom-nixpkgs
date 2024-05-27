@@ -14,7 +14,7 @@
       };
     in
     {
-      overlay = final: prev: {
+      overlays.default = final: prev: {
         hello-nix = pkgs.callPackage ./pkgs/by-name/hello-nix/package.nix { }; 
       };
 
@@ -33,7 +33,7 @@
       #  nixpkgs.lib.filesystem.packagesFromDirectoryRecursive {
       #    inherit (scope) callPackage;
       #    directory = ../pkgs/by-name;
-      #  };
+      #  }
 
       #imports = [
       #  ./imports/formatter.nix
