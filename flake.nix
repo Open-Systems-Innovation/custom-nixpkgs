@@ -15,7 +15,7 @@
     in
     {
       overlay = final: prev: {
-        hello-nix = pkgs.callPackage ./pkgs/by-name/hello-nix { }; 
+        hello-nix = pkgs.callPackage ./pkgs/by-name/hello-nix/package.nix { }; 
       };
 
       packages.${system} = {
