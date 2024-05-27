@@ -35,10 +35,10 @@
       #    directory = ../pkgs/by-name;
       #  };
 
-      imports = [
-        ./imports/formatter.nix
-        ./imports/pkgs-by-name.nix
-        ./imports/pkgs-all.nix
-      ];
+      #imports = [
+      #  ./imports/formatter.nix
+      #  ./imports/pkgs-by-name.nix
+      #  ./imports/pkgs-all.nix
+      #];
     };
 }
