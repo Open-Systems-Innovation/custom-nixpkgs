@@ -13,7 +13,7 @@ stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "hello-nix";
     rev = "master";  # You can specify a commit hash or a tag here if needed
-    sha256 = "";
+    sha256 = "sha256-VP+R+GcvLOd+Hu1n0/zNoMCSVTnZXm44N+KJKQuQlfw=";
   };
 
   buildInputs = [ coreutils gcc ];
