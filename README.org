@@ -1,0 +1,48 @@
+#+title: Custom Nixpkgs Overlay for OSI 
+
+This repository contains Nix packages used internally at OSI and not available on nixpkgs. These packages are not merged with nixpkgs because:
+ 1. They are only useful for very specific projects (e.g. a specific compilation of a library)
+ 2. They are only used in the internal work flow of OSI.
+
+* Using this repository
+To use this repository, create a new flake.nix file, and add the following into the inputs:
+
+#+BEGIN_SRC nix
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    custom-nixpkgs.url = "github:Open-Systems-Innovation/custom-nixpkgs";
+  };
+#+END_SRC
+
+Now you can consume the overlay in a ~let ... in~ statement right after the inputs of your ~outputs~ funciton:
+
+#+BEGIN_SRC nix
+  outputs = { self, nixpkgs, custom-nixpkgs, ... }:
+      let
+        system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ custom-nixpkgs.overlays.default ];
+        };
+      in
+#+END_SRC
+
+Now you can use this in a ~devShell~ or a ~buildInput~ as you like:
+
+#+BEGIN_SRC nix
+   devShells.${system}.default = pkgs.mkShell {
+     name = "default";
+        
+     packages = [
+     # General packages
+       pkgs.hello-nix
+     ];
+   };
+#+END_SRC
+
+* Adding this repo as an overlay to your Home-manager config
+TODO
+
+* Acknowledgments
+Special thanks to [drupol](https://github.com/drupol/my-own-nixpkgs) for coming up with this idea.
+
