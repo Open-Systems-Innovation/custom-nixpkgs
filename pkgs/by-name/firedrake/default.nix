@@ -28,7 +28,7 @@
 
   pytestCheckHook,
   pytest-xdist,
-  #pylit,
+  pylit,
 }:
 
 let
