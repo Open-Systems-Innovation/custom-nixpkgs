@@ -15,7 +15,7 @@
         };
       in
         {
-          devShells.${system}.default = pkgs.mkShell {
+          devShells.\${system}.default = pkgs.mkShell {
             name = "default";
                
             packages = [
