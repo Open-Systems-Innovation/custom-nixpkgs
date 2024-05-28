@@ -9,4 +9,5 @@ pkgs.writeShellScriptBin "dev-env" ''
     ${flakeNixContent}
   EOF
   echo "use flake" > .envrc
+  direnv allow
 ''
