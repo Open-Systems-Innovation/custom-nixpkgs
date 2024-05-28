@@ -11,20 +11,20 @@ python3Packages.buildPythonApplication rec {
     owner = "Open-Systems-Innovation";
     repo = "dev-env";
     rev = "main";
-    sha256 = "sha256-6NHSpxyMM3oOXCh2I1EYeRrZQRfC/XNsNWNwrastVtE=";
+    sha256 = "sha256-DTpyiXApr1+f3cFGTt096FjRES33pZlN7onsNhjzjOg=";
+    
   };
 
   dontUnpack = true;
 
-  buildPhase = ''
-    echo "WORKING DIRECTORY FOR NIX: "
-    pwd
-  '';
-    
   installPhase = ''
-    install -Dm755 ${./create_flake.py} $out/bin/${pname}
-    mkdir -p $out/bin
-    cp create_flake.py $out/bin/dev-env
-    chmod +x $out/bin/dev-env
+    echo "****************INSPECTING*********"
+    pwd
+    ls
+    cd $src
+    pwd
+    ls
+    install -Dm755 $src/create_flake.py $out/bin/${pname}
+    cp flake.nix $out/bin/flake.nix
   '';
 }

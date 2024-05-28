@@ -41,7 +41,19 @@ Now you can use this in a ~devShell~ or a ~buildInput~ as you like:
 #+END_SRC
 
 * Adding this repo as an overlay to your Home-manager config
-TODO
+If you are using home-manager in a flake for your NixOS configuration, simply add the following to your flake.nix input
+
+#+BEGIN_SRC nix
+  custom-nixpkgs.url = "github:Open-Systems-Innovation/custom-nixpkgs";
+#+END_SRC
+
+And in your home-manager file, add the following
+
+#+BEGIN_SRC nix
+  nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
+#+END_SRC
+
+Now you can add custom-nixpkgs to your ~home.packages~ and use them in local flakes.
 
 * Acknowledgments
 Special thanks to [drupol](https://github.com/drupol/my-own-nixpkgs) for coming up with this idea.
