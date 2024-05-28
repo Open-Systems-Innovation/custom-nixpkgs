@@ -18,12 +18,6 @@ python3Packages.buildPythonApplication rec {
   dontUnpack = true;
 
   installPhase = ''
-    echo "****************INSPECTING*********"
-    pwd
-    ls
-    cd $src
-    pwd
-    ls
     install -Dm755 $src/create_flake.py $out/bin/${pname}
     cp flake.nix $out/bin/flake.nix
   '';
