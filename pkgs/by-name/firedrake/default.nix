@@ -28,7 +28,6 @@
 
   pytestCheckHook,
   pytest-xdist,
-  pylit,
 }:
 
 let
@@ -61,6 +60,7 @@ let
   tsfc = callPackage ./tsfc.nix { inherit fiat finat ufl; };
   finat = callPackage ./finat.nix { inherit ufl fiat; };
   pyadjoint = callPackage ./pyadjoint.nix { inherit checkpoint-schedules; };
+  pylit = callPackage ./pylit.nix { };
 in
 buildPythonPackage rec {
   pname = "firedrake";
