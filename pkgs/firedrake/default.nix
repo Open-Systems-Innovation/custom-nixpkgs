@@ -2,11 +2,11 @@
   lib,
   pkgs,
   buildPythonPackage,
+  python3Packages,
   callPackage,
   substituteAll,
   fetchFromGitHub,
   mpich,
-  custom-petsc,
   hdf5-mpi,
   openssh,
   mpiCheckPhaseHook,
@@ -26,45 +26,44 @@
 
   pytestCheckHook,
   pytest-xdist,
-  pylit,
 }:
 
 let
   mpi = mpich;
 
-  custom-libspatialindex = pkgs.callPackage ./custom-libspatialindex.nix;
+  custom-libspatialindex = callPackage ./custom-libspatialindex.nix { };
 
-  custom-mpi4py = pkgs.callPackage ../custom-mpi4py/default.nix;
+  custom-mpi4py = python3Packages.callPackage ../custom-mpi4py/default.nix { };
 
-  custom-petsc = pkgs.callPackage ../custom-petsc/default.nix;
+  petscWithFeatures = callPackage ../custom-petsc/default.nix { };
   
-  petscWithFeatures = custom-petsc.override {
-    inherit mpi;
-    withHdf5 = true;
-    withPtscotch = true;
-    withSuperlu = true;
-    withHypre = true;
-    withScalapack = true;
-    withChaco = true;
-    withMumps = true;
-  };
-
-  libsupermesh = pkgs.callPackage ./libsupermesh.nix { };
+  libsupermesh = callPackage ./libsupermesh.nix { };
+  
   ufl = callPackage ./ufl.nix { };
+  
   fiat = callPackage ./fiat.nix { };
+  
   checkpoint-schedules = callPackage ./checkpoint-schedules.nix { };
+  
   pytest-mpi = callPackage ./pytest-mpi.nix { inherit mpi; };
+  
   petsc4py = callPackage ./petsc4py.nix {
     inherit mpi;
     petsc = petscWithFeatures;
   };
+  
   pyop2 = callPackage ./pyop2.nix {
     inherit mpi petsc4py;
     petsc = petscWithFeatures;
   };
+  
   tsfc = callPackage ./tsfc.nix { inherit fiat finat ufl; };
+  
   finat = callPackage ./finat.nix { inherit ufl fiat; };
+  
   pyadjoint = callPackage ./pyadjoint.nix { inherit checkpoint-schedules; };
+
+  pylit = callPackage ../pylit/default.nix { };
 in
 buildPythonPackage rec {
   pname = "firedrake";

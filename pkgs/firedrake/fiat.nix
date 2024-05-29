@@ -1,17 +1,18 @@
 {
   lib,
   buildPythonPackage,
+  python3Packages,
   substituteAll,
   fetchFromGitHub,
   setuptools,
   numpy,
-  recursivenodes,
   scipy,
   sympy,
   pytestCheckHook,
 }:
 
 let
+  recursivenodes = python3Packages.callPackage ../recursivenodes/default.nix { };
   fiat-reference-data = fetchFromGitHub {
     owner = "firedrakeproject";
     repo = "fiat-reference-data";

@@ -19,18 +19,16 @@
   withP4est ? false,
   p4est,
   zlib, # propagated by p4est but required by petsc
-  withHdf5 ? false,
+  withHdf5 ? true,
   hdf5-mpi,
-  withPtscotch ? false,
-  scotch,
-  withSuperlu ? false,
+  withPtscotch ? true,
+  withSuperlu ? true,
   superlu,
-  withHypre ? false,
-  hypre,
-  withScalapack ? false,
+  withHypre ? true,
+  withScalapack ? true,
   scalapack,
-  withMumps ? false,
-  withChaco ? false,
+  withMumps ? true,
+  withChaco ? true,
   buildEnv,
 }:
 
@@ -41,6 +39,10 @@ assert withChaco -> !with64BitIndices; # chaco is 32 bit only
 assert withSuperlu -> !with64BitIndices; # SuperLU is 32 bit only
 
 let
+  hypre = callPackage ../custom-hypre/package.nix { };
+
+  scotch = callPackage ../custom-scotch/package.nix { };
+
   blaslapack = buildEnv {
     name = "blaslapack-${blas.version}+${lapack.version}";
     paths = [

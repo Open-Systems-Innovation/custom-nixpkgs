@@ -1,111 +1,53 @@
-{
-  lib,
-  buildPythonPackage,
-  fetchPypi,
-  setuptools,
-  pytestCheckHook,
-  mpi,
-  mpiCheckPhaseHook,
-  openssh,
+{ lib, fetchPypi, fetchpatch, python, buildPythonPackage
+, mpi, mpiCheckPhaseHook, openssh
 }:
 
 buildPythonPackage rec {
   pname = "mpi4py";
-  version = "3.1.6";
-  pyproject = true;
+  version = "3.1.5";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-yPpiXg+SsILvlVv7UvGfpmkdKSc9fXETXSlaoUPe5ss=";
+    hash = "sha256-pwbnbbklUTXC+10e9Uy097DkrZ4zy62n3idiYgXyoVM=";
   };
-
-  postPatch = ''
-    substituteInPlace test/test_spawn.py --replace-fail \
-                      "unittest.skipMPI('openmpi(<3.0.0)')" \
-                      "unittest.skipMPI('openmpi')"
-  '';
-
-  build-system = [ setuptools ];
-
-  nativeBuildInputs = [ mpi ];
-
-  __darwinAllowLocalNetworking = true;
-
-  nativeCheckInputs = [
-    pytestCheckHook
-    mpiCheckPhaseHook
-    openssh
-  ];
-
-  disabledTests = [
-    "testFree"
-    "testCommSelfSetErrhandler"
-    "testCommWorldSetErrhandler"
-  ];
 
   passthru = {
     inherit mpi;
   };
 
-  meta = {{
-  lib,
-  buildPythonPackage,
-  fetchPypi,
-  setuptools,
-  pytestCheckHook,
-  mpi,
-  mpiCheckPhaseHook,
-  openssh,
-}:
-
-buildPythonPackage rec {
-  pname = "mpi4py";
-  version = "3.1.6";
-  pyproject = true;
-
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-yPpiXg+SsILvlVv7UvGfpmkdKSc9fXETXSlaoUPe5ss=";
-  };
-
   postPatch = ''
-    substituteInPlace test/test_spawn.py --replace-fail \
+    substituteInPlace test/test_spawn.py --replace \
                       "unittest.skipMPI('openmpi(<3.0.0)')" \
                       "unittest.skipMPI('openmpi')"
   '';
 
-  build-system = [ setuptools ];
+  configurePhase = "";
+
+  installPhase = ''
+    mkdir -p "$out/lib/${python.libPrefix}/site-packages"
+    export PYTHONPATH="$out/lib/${python.libPrefix}/site-packages:$PYTHONPATH"
+
+    ${python}/bin/${python.executable} setup.py install \
+      --install-lib=$out/lib/${python.libPrefix}/site-packages \
+      --prefix="$out"
+
+    # --install-lib:
+    # sometimes packages specify where files should be installed outside the usual
+    # python lib prefix, we override that back so all infrastructure (setup hooks)
+    # work as expected
+  '';
+
+  setupPyBuildFlags = ["--mpicc=${mpi}/bin/mpicc"];
 
   nativeBuildInputs = [ mpi ];
 
   __darwinAllowLocalNetworking = true;
 
-  nativeCheckInputs = [
-    pytestCheckHook
-    mpiCheckPhaseHook
-    openssh
-  ];
+  nativeCheckInputs = [ openssh mpiCheckPhaseHook ];
 
-  disabledTests = [
-    "testFree"
-    "testCommSelfSetErrhandler"
-    "testCommWorldSetErrhandler"
-  ];
-
-  passthru = {
-    inherit mpi;
-  };
-
-  meta = {
+  meta = with lib; {
     description = "Python bindings for the Message Passing Interface standard";
     homepage = "https://github.com/mpi4py/mpi4py";
-    license = lib.licenses.bsd2;
-    maintainer = with lib.maintainers; [ tomasajt ];
-  };
-}
-    description = "Python bindings for the Message Passing Interface standard";
-    homepage = "https://github.com/mpi4py/mpi4py";
-    license = lib.licenses.bsd2;
-    maintainer = with lib.maintainers; [ tomasajt ];
+    license = licenses.bsd2;
   };
 }
