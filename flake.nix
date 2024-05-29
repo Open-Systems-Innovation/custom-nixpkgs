@@ -15,15 +15,16 @@
     in
     {
       overlays.default = final: prev: {
-        hello-nix = prev.callPackage ./pkgs/by-name/hello-nix/package.nix { }; 
-        firedrake = prev.python3Packages.callPackage ./pkgs/by-name/firedrake { }; 
-        dev-env = prev.callPackage ./pkgs/by-name/dev-env/package.nix { }; 
+        hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
+        firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
+        dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
       };
 
       packages.${system} = {
-        hello-nix = pkgs.callPackage ./pkgs/by-name/dev-env/package.nix { }; 
-        firedrake = pkgs.python3Packages.callPackage ./pkgs/by-name/firedrake { }; 
-        dev-env = pkgs.callPackage ./pkgs/by-name/dev-env/package.nix { }; 
+        custom-libspatialindex = pkgs.callPackage ./pkgs/custom-libspatialindex/package.nix { };
+        hello-nix = pkgs.callPackage ./pkgs/dev-env/package.nix { }; 
+        firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake { }; 
+        dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { }; 
       };
 
     };
