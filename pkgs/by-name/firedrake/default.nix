@@ -6,11 +6,11 @@
   substituteAll,
   fetchFromGitHub,
   mpich,
-  petsc,
+  custom-petsc,
   hdf5-mpi,
   openssh,
   mpiCheckPhaseHook,
-  libspatialindex,
+  custom-libspatialindex,
 
   setuptools,
   cython_0,
@@ -23,17 +23,18 @@
   scipy,
   sympy,
   vtk,
-  mpi4py,
+  custom-mpi4py,
   h5py-mpi,
 
   pytestCheckHook,
   pytest-xdist,
+  pylit,
 }:
 
 let
   mpi = mpich;
 
-  petscWithFeatures = petsc.override {
+  petscWithFeatures = custom-petsc.override {
     inherit mpi;
     withHdf5 = true;
     withPtscotch = true;
@@ -60,7 +61,6 @@ let
   tsfc = callPackage ./tsfc.nix { inherit fiat finat ufl; };
   finat = callPackage ./finat.nix { inherit ufl fiat; };
   pyadjoint = callPackage ./pyadjoint.nix { inherit checkpoint-schedules; };
-  pylit = callPackage ./pylit.nix { };
 in
 buildPythonPackage rec {
   pname = "firedrake";
@@ -95,7 +95,7 @@ buildPythonPackage rec {
 
   buildInputs = [
     (hdf5-mpi.override { inherit mpi; })
-    libspatialindex
+    custom-libspatialindex
     libsupermesh
   ];
 
@@ -115,10 +115,10 @@ buildPythonPackage rec {
     fiat
     finat
 
-    (mpi4py.override { inherit mpi; })
+    (custom-mpi4py.override { inherit mpi; })
     (h5py-mpi.override {
       hdf5 = hdf5-mpi.override { inherit mpi; };
-      mpi4py = mpi4py.override { inherit mpi; };
+      mpi4py = custom-mpi4py.override { inherit mpi; };
     })
 
     cached-property
@@ -181,11 +181,11 @@ buildPythonPackage rec {
     inherit
       libsupermesh
       mpi
-      libspatialindex
+      
       pytest-mpi
       pylit
       pyop2
       petsc4py
-      ;
+      ;libspatialindex = custom-libspatialindex;
   };
 }
