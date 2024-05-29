@@ -34,6 +34,8 @@
 let
   mpi = mpich;
 
+  custom-libspatialindex = pkgs.callPackage ./custom-libspatialindex.nix;
+  
   petscWithFeatures = custom-petsc.override {
     inherit mpi;
     withHdf5 = true;

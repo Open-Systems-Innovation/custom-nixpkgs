@@ -21,7 +21,6 @@
       };
 
       packages.${system} = {
-        custom-libspatialindex = pkgs.callPackage ./pkgs/custom-libspatialindex/package.nix { };
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { }; 
