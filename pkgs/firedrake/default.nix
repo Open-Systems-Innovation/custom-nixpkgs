@@ -10,7 +10,6 @@
   hdf5-mpi,
   openssh,
   mpiCheckPhaseHook,
-  custom-libspatialindex,
 
   setuptools,
   cython_0,
@@ -23,7 +22,6 @@
   scipy,
   sympy,
   vtk,
-  custom-mpi4py,
   h5py-mpi,
 
   pytestCheckHook,
@@ -35,6 +33,10 @@ let
   mpi = mpich;
 
   custom-libspatialindex = pkgs.callPackage ./custom-libspatialindex.nix;
+
+  custom-mpi4py = pkgs.callPackage ../custom-mpi4py/default.nix;
+
+  custom-petsc = pkgs.callPackage ../custom-petsc/default.nix;
   
   petscWithFeatures = custom-petsc.override {
     inherit mpi;
