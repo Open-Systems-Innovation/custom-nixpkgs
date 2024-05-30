@@ -22,17 +22,16 @@
   withHdf5 ? false,
   hdf5-mpi,
   withPtscotch ? false,
+  scotch,
   withSuperlu ? false,
   superlu,
   withHypre ? false,
+  hypre,
   withScalapack ? false,
   scalapack,
   withMumps ? false,
   withChaco ? false,
   buildEnv,
-
-  hypre,
-  scotch,
 }:
 
 # This version of PETSc does not support a non-MPI p4est build

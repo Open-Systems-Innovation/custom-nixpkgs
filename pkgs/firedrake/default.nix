@@ -6,9 +6,12 @@
   substituteAll,
   fetchFromGitHub,
   mpich,
+  petsc,
   hdf5-mpi,
   openssh,
   mpiCheckPhaseHook,
+  libspatialindex,
+  recursivenodes,
 
   setuptools,
   cython_0,
@@ -21,15 +24,11 @@
   scipy,
   sympy,
   vtk,
+  mpi4py,
   h5py-mpi,
 
   pytestCheckHook,
   pytest-xdist,
-
-  mpi4py,
-  recursivenodes,
-  petsc,
-  libspatialindex,
   pylit,
 }:
 
@@ -47,7 +46,7 @@ let
     withMumps = true;
   };
 
-  libsupermesh = pkgs.callPackage ./libsupermesh.nix { inherit libspatialindex; };
+  libsupermesh = pkgs.callPackage ./libsupermesh.nix { inherit mpi libspatialindex; };
   
   ufl = callPackage ./ufl.nix { };
   

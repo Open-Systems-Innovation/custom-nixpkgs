@@ -1,35 +1,31 @@
 {
   lib,
   buildPythonPackage,
-  fetchFromGitea,
-  flit-core,
+  fetchFromGitLab,
+  setuptools,
+  numpy,
+  scipy,
   pytestCheckHook,
-  nose,
 }:
 
 buildPythonPackage rec {
-  pname = "pylit";
-  version = "0.8.0";
+  pname = "recursivenodes";
+  version = "0.2.0";
   pyproject = true;
 
-  src = fetchFromGitea {
-    domain = "codeberg.org";
-    owner = "milde";
-    repo = "pylit";
-    rev = version;
-    hash = "sha256-kXiWRRccv3ZI0v6efJRLYJ2Swx60W3QUtM1AEF6IMpo=";
+  src = fetchFromGitLab {
+    owner = "tisaac";
+    repo = "recursivenodes";
+    rev = "v${version}";
+    hash = "sha256-aYICX38uPsG80Bt2cPg5xshuTMkK1bzno5mXRkrvQbU=";
   };
 
-  build-system = [ flit-core ];
+  build-system = [ setuptools ];
 
-  nativeCheckInputs = [
-    #pytestCheckHook
-    #nose
+  dependencies = [
+    numpy
+    scipy
   ];
 
-  pythonImportsCheck = [ "pylit" ];
-
-  meta = {
-    maintainers = with lib.maintainers; [ tomasajt ];
-  };
+  nativeCheckInputs = [ pytestCheckHook ];
 }
