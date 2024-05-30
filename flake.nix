@@ -2,7 +2,7 @@
   description = "Custom nixpkgs for OSI";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
   };
 
   outputs =
@@ -32,7 +32,7 @@
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
         recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
         firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake {
-          inherit mpi4py petsc libspatialindex pylit recursivenodes; }; 
+          inherit mpi4py petsc pylit recursivenodes; }; 
       };
     };
 }
