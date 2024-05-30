@@ -13,7 +13,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "libspatialindex";
     repo = "libspatialindex";
     rev = finalAttrs.version;
-    hash = "sha256-39hsCWcNBjq3C3jVjxds4qGdrKX/9FlV3qnPXA5JqvA=";
+    hash = "sha256-zsvS0IkCXyuNLCQpccKdAsFKoq0l+y66ifXlTHLNTkc="; 
   };
 
   nativeBuildInputs = [ cmake ];

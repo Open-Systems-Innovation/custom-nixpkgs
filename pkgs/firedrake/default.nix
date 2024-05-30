@@ -2,7 +2,6 @@
   lib,
   pkgs,
   buildPythonPackage,
-  python3Packages,
   callPackage,
   substituteAll,
   fetchFromGitHub,
@@ -26,26 +25,37 @@
 
   pytestCheckHook,
   pytest-xdist,
+
+  mpi4py,
+  recursivenodes,
+  petsc,
+  libspatialindex,
+  pylit,
 }:
 
 let
   mpi = mpich;
 
-  custom-libspatialindex = callPackage ./custom-libspatialindex.nix { };
+  petscWithFeatures = petsc.override {
+    inherit mpi;
+    withHdf5 = true;
+    withPtscotch = true;
+    withSuperlu = true;
+    withHypre = true;
+    withScalapack = true;
+    withChaco = true;
+    withMumps = true;
+  };
 
-  custom-mpi4py = python3Packages.callPackage ../custom-mpi4py/default.nix { };
-
-  petscWithFeatures = callPackage ../custom-petsc/default.nix { };
-  
-  libsupermesh = callPackage ./libsupermesh.nix { };
+  libsupermesh = pkgs.callPackage ./libsupermesh.nix { inherit libspatialindex; };
   
   ufl = callPackage ./ufl.nix { };
   
-  fiat = callPackage ./fiat.nix { };
+  fiat = callPackage ./fiat.nix { inherit recursivenodes; };
   
   checkpoint-schedules = callPackage ./checkpoint-schedules.nix { };
   
-  pytest-mpi = callPackage ./pytest-mpi.nix { inherit mpi; };
+  pytest-mpi = callPackage ./pytest-mpi.nix { inherit mpi mpi4py; };
   
   petsc4py = callPackage ./petsc4py.nix {
     inherit mpi;
@@ -53,7 +63,7 @@ let
   };
   
   pyop2 = callPackage ./pyop2.nix {
-    inherit mpi petsc4py;
+    inherit mpi petsc4py mpi4py;
     petsc = petscWithFeatures;
   };
   
@@ -62,8 +72,7 @@ let
   finat = callPackage ./finat.nix { inherit ufl fiat; };
   
   pyadjoint = callPackage ./pyadjoint.nix { inherit checkpoint-schedules; };
-
-  pylit = callPackage ../pylit/default.nix { };
+  
 in
 buildPythonPackage rec {
   pname = "firedrake";
@@ -98,7 +107,7 @@ buildPythonPackage rec {
 
   buildInputs = [
     (hdf5-mpi.override { inherit mpi; })
-    custom-libspatialindex
+    libspatialindex
     libsupermesh
   ];
 
@@ -118,10 +127,10 @@ buildPythonPackage rec {
     fiat
     finat
 
-    (custom-mpi4py.override { inherit mpi; })
+    (mpi4py.override { inherit mpi; })
     (h5py-mpi.override {
       hdf5 = hdf5-mpi.override { inherit mpi; };
-      mpi4py = custom-mpi4py.override { inherit mpi; };
+      mpi4py = mpi4py.override { inherit mpi; };
     })
 
     cached-property
@@ -184,11 +193,11 @@ buildPythonPackage rec {
     inherit
       libsupermesh
       mpi
-      
+      libspatialindex
       pytest-mpi
       pylit
       pyop2
       petsc4py
-      ;libspatialindex = custom-libspatialindex;
+      ;
   };
 }

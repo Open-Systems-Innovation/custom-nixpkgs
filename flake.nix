@@ -20,11 +20,17 @@
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
       };
 
-      packages.${system} = {
+      packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
-        firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake { }; 
-        dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { }; 
+        dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
+        hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
+        scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
+        libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
+        mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
+        petsc = pkgs.callPackage ./pkgs/petsc { inherit hypre scotch; };
+        pylit = pkgs.callPackage ./pkgs/pylit { };
+        recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
+        firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake { inherit mpi4py petsc libspatialindex pylit recursivenodes; }; 
       };
-
     };
 }

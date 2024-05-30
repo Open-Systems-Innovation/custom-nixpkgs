@@ -1,5 +1,11 @@
-{ lib, fetchPypi, fetchpatch, python, buildPythonPackage
-, mpi, mpiCheckPhaseHook, openssh
+{ lib,
+  fetchPypi,
+  fetchpatch,
+  python,
+  buildPythonPackage,
+  mpi,
+  mpiCheckPhaseHook,
+  openssh
 }:
 
 buildPythonPackage rec {

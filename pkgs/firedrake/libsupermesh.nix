@@ -16,7 +16,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "firedrakeproject";
     repo = "libsupermesh";
     rev = "84becef14eb117defa49354116c04aa180471a07";
-    hash = "sha256-39hsCWcNBjq3C3jVjxdD4qGdrKX/9FlV3qnPXA5JqvA=";
+    hash = "sha256-zsvS0IkCXyuNLCQpccKdAsFKoq0l+y66ifXlTHLNTkc=";
   };
 
   nativeBuildInputs = [ cmake ];
