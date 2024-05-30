@@ -28,7 +28,7 @@
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
         petsc = pkgs.callPackage ./pkgs/petsc { inherit hypre scotch; };
-        pylit = pkgs.callPackage ./pkgs/pylit { };
+        pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
         recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
         firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake { inherit mpi4py petsc libspatialindex pylit recursivenodes; }; 
       };
