@@ -14,14 +14,23 @@
       };
     in
     {
-      overlays.default = final: prev: {
+      overlays.default = final: prev: rec {
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         #firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
+        hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
+        scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
+        libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
+        petsc = pkgs.callPackage ./pkgs/petsc {
+          inherit hypre scotch; };
 
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
-          (python-final: python-prev: {
-            firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
+          (python-final: python-prev: rec { 
+            pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
+            mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
+            recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
+            firedrake = prev.python3Packages.callPackage ./pkgs/firedrake {
+              inherit mpi4py petsc pylit recursivenodes;}; 
           })
         ];
       
