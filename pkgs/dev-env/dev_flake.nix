@@ -20,9 +20,9 @@
                
             packages = [
             # General packages
-              pkgs.hello-nix
+              # pkgs.hello-nix
 
-              # Python packages
+              #  # Python packages
               #(pkgs.python3.withPackages (python-pkgs: [
               #  # packages for formatting/ IDE
               #  python-pkgs.pip
@@ -36,7 +36,8 @@
             ];
 
             shellHook = ''
-                export PS1="\[\e[0;32m\][dev-shell]$\[\e[0;36m\] "
+              export ENVIRONMENT_NAME="firedrake"
+              export PS1 = "┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][$ENVIRONMENT_NAME]\n└─╼"
             '';
           };
         };
