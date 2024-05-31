@@ -16,7 +16,6 @@
     {
       overlays.default = final: prev: rec {
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
-        #firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
