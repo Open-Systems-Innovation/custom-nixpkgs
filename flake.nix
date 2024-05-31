@@ -18,23 +18,22 @@
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         #firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
-      };
 
-      overlays.python = final: prev: {
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: {
-           firedrake = python-final.callPackage ./pkgs/firedrake { };
+            firedrake = prev.python3Packages.callPackage ./pkgs/firedrake { }; 
           })
         ];
-
+      
         python3 =
           let
             self = prev.python3.override {
               inherit self;
               packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
             }; in
-            self;
-        python3Packages = final.python3.pkgs;
+          self;
+
+  python3Packages = final.python3.pkgs;
       };
 
       packages.${system} = rec {
