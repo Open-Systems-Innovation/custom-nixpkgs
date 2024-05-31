@@ -32,11 +32,12 @@
               #  python-pkgs.matplotlib
               #  python-pkgs.meshio
               #  python-pkgs.numpy
+              #  python-pkgs.firedrake
               #]))
             ];
 
             shellHook = ''
-              export ENVIRONMENT_NAME="firedrake"
+              export ENVIRONMENT_NAME="Custom Environment"
               export PS1="┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][\$ENVIRONMENT_NAME]\n└─╼"
             '';
           };
