@@ -37,7 +37,7 @@
 
             shellHook = ''
               export ENVIRONMENT_NAME="firedrake"
-              export PS1="┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][$ENVIRONMENT_NAME]\n└─╼"
+              export PS1="┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][\$ENVIRONMENT_NAME]\n└─╼"
             '';
           };
         };
