@@ -20,7 +20,7 @@
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
-        libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
+        #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         petsc = pkgs.callPackage ./pkgs/petsc {
           inherit hypre scotch; };
 
