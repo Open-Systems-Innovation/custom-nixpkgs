@@ -5,8 +5,11 @@ This repository contains Nix packages used internally at OSI and not available o
  2. They are only used in the internal work flow of OSI.
 * List of packages
 ** dev-env
+Creates a standard development environment for OSI simulation projects.
 ** firedrake
+[[https://www.firedrakeproject.org/][Firedrake]] is an automated system for the solution of partial differential equations used in the finite element method.
 ** hello-nix
+A simple example program for packaging programs for custom-nixpkgs
 ** hypre
 ** libspatialindex
 ** mpi4py
