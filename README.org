@@ -3,6 +3,17 @@
 This repository contains Nix packages used internally at OSI and not available on nixpkgs. These packages are not merged with nixpkgs because:
  1. They are only useful for very specific projects (e.g. a specific compilation of a library)
  2. They are only used in the internal work flow of OSI.
+* List of packages
+** dev-env
+** firedrake
+** hello-nix
+** hypre
+** libspatialindex
+** mpi4py
+** petsc
+** pylit
+** recursivenodes
+** scotch
 
 * Using this repository
 To use this repository, create a new flake.nix file, and add the following into the inputs:
