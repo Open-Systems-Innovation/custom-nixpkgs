@@ -11,12 +11,20 @@ Creates a standard development environment for OSI simulation projects.
 ** hello-nix
 A simple example program for packaging programs for custom-nixpkgs
 ** hypre
+A library of high performance predonditioners and solvers featuring multigrid methods for the solution of large, sparse linear systems of equations on massively parallel computers.
 ** libspatialindex
+libspatialindex probides an extensible framework for spatial indexing, spatial queries, user-friendly interfaces for data management, customization of index characteristics, and index persistence for both internal and external memory structures.
 ** mpi4py
+mpi4py provides MPI bindings for the Python programming language, allowing python programs to exploit multiple processors.
 ** petsc
+PETSc is for the scalable solution of partial differential equations. 
 ** pylit
+A tool for literate programming. Used in the demo files of firedrake
 ** recursivenodes
+Creates nodes for the polynomial interpolation on the simplex in arbitrary dimensions.
 ** scotch
+Scotch is a software packaging library for graph and mesh/hypergraph partitioning, graph clustering, and sparse matrix ordering.
+
 
 * Using this repository
 To use this repository, create a new flake.nix file, and add the following into the inputs:
