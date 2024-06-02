@@ -9,21 +9,21 @@ Creates a standard development environment for OSI simulation projects.
 ** firedrake
 [[https://www.firedrakeproject.org/][Firedrake]] is an automated system for the solution of partial differential equations used in the finite element method.
 ** hello-nix
-A simple example program for packaging programs for custom-nixpkgs
+[[https://github.com/Open-Systems-Innovation/hello-nix][hello-nix]] is a simple example program for packaging programs for custom-nixpkgs
 ** hypre
-A library of high performance predonditioners and solvers featuring multigrid methods for the solution of large, sparse linear systems of equations on massively parallel computers.
+[[https://computing.llnl.gov/projects/hypre-scalable-linear-solvers-multigrid-methods][HYPRE]] is a library of high performance preconditioners and solvers featuring multigrid methods for the solution of large, sparse linear systems of equations on massively parallel computers.
 ** libspatialindex
-libspatialindex probides an extensible framework for spatial indexing, spatial queries, user-friendly interfaces for data management, customization of index characteristics, and index persistence for both internal and external memory structures.
+[[https://libspatialindex.org/en/latest/][libspatialindex]] provides an extensible framework for spatial indexing, spatial queries, user-friendly interfaces for data management, customization of index characteristics, and index persistence for both internal and external memory structures.
 ** mpi4py
-mpi4py provides MPI bindings for the Python programming language, allowing python programs to exploit multiple processors.
+[[https://mpi4py.readthedocs.io/en/stable/][mpi4py]] provides MPI bindings for the Python programming language, allowing python programs to exploit multiple processors.
 ** petsc
-PETSc is for the scalable solution of partial differential equations. 
+[[https://petsc.org/release/][PETSc]] is for the scalable solution of partial differential equations. 
 ** pylit
-A tool for literate programming. Used in the demo files of firedrake
+[[https://codeberg.org/milde/pylit][Pylit]] is a tool for literate programming. Used in the demo files of Firedrake
 ** recursivenodes
-Creates nodes for the polynomial interpolation on the simplex in arbitrary dimensions.
+[[https://tisaac.gitlab.io/recursivenodes/][recursivenodes]] creates nodes for the polynomial interpolation on the simplex in arbitrary dimensions.
 ** scotch
-Scotch is a software packaging library for graph and mesh/hypergraph partitioning, graph clustering, and sparse matrix ordering.
+[[https://www.labri.fr/perso/pelegrin/scotch/][scotch]] is a software packaging library for graph and mesh/hypergraph partitioning, graph clustering, and sparse matrix ordering.
 
 
 * Using this repository
@@ -78,5 +78,4 @@ And in your home-manager file, add the following
 Now you can add custom-nixpkgs to your ~home.packages~ and use them in local flakes.
 
 * Acknowledgments
-Special thanks to [drupol](https://github.com/drupol/my-own-nixpkgs) for coming up with this idea.
-
+The main structure of this repo is based on the similar package by [[https://github.com/drupol/my-own-nixpkgs][Drupol]].
