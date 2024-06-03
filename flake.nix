@@ -22,11 +22,12 @@
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         petsc = pkgs.callPackage ./pkgs/petsc {
           inherit hypre scotch; };
-
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
             mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
+            petsc4py = pkgs.python3Packages.callPackage ./pkgs/petsc4py {
+              inherit petsc; };
             recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
             firedrake = prev.python3Packages.callPackage ./pkgs/firedrake {
               inherit mpi4py petsc pylit recursivenodes;}; 
