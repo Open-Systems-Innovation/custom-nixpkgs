@@ -54,6 +54,8 @@
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
         petsc = pkgs.callPackage ./pkgs/petsc {
           inherit hypre scotch; };
+        petsc4py = pkgs.callPackage ./pkgs/petsc4py {
+          inherit petsc; };
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
         recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
         firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake {
