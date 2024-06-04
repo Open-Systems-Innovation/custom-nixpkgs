@@ -52,8 +52,7 @@
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
-        petsc = pkgs.callPackage ./pkgs/petsc {
-          inherit hypre scotch; };
+        petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc4py = pkgs.callPackage ./pkgs/petsc4py {
           inherit petsc; };
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
