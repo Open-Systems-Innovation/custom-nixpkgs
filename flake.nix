@@ -20,8 +20,7 @@
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-        petsc = pkgs.callPackage ./pkgs/petsc {
-          inherit hypre scotch; };
+        petsc = pkgs.callPackage ./pkgs/petsc { };
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
