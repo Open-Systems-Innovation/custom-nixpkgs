@@ -6,6 +6,7 @@ This repository contains Nix packages used internally at OSI and not available o
 * List of packages
 ** dev-env
 Creates a standard development environment for OSI simulation projects.
+*** TODO add automatic git integration
 ** firedrake
 [[https://www.firedrakeproject.org/][Firedrake]] is an automated system for the solution of partial differential equations used in the finite element method.
 ** hello-nix
