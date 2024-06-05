@@ -37,7 +37,7 @@
               #]))
             ];
 
-            # PETSC_DIR = "${pkgs.petsc}";
+            # PETSC_DIR = "\${pkgs.petsc}";
 
             shellHook = ''
               export ENVIRONMENT_NAME="Custom Environment"
