@@ -15,7 +15,7 @@
         };
       in
         {
-          devShells.\${system}.default = pkgs.mkShell {
+          devShells.${system}.default = pkgs.mkShell {
             name = "default";
                
             packages = [
@@ -23,6 +23,7 @@
               # pkgs.hello-nix
               # pkgs.petsc
               # pkgs.mpich
+              # pkgs.clangd
               #  # Python packages
               #(pkgs.python3.withPackages (python-pkgs: [
               #  # packages for formatting/ IDE
@@ -37,11 +38,11 @@
               #]))
             ];
 
-            # PETSC_DIR = "\${pkgs.petsc}";
+            # PETSC_DIR = "${pkgs.petsc}";
 
             shellHook = ''
               export ENVIRONMENT_NAME="Custom Environment"
-              export PS1="┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][\$ENVIRONMENT_NAME]\n└─╼"
+              export PS1="┌─[\[\e[01;32m\]\u\[\e[00m\]@\[\e[01;32m\]\h\[\e[00m\]:\[\e[1;34m\]\w\[\e[0m\]][$ENVIRONMENT_NAME]\n└─╼"
             '';
           };
         };
