@@ -1,0 +1,5 @@
+#+TITLE: A PETSc package for Nix
+This packages currently provides a basic install of the ~PETSc~ linear algebra library.
+
+* Future improvements
+- Add customizable options for adding external library support, and other common configuration options
