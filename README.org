@@ -18,7 +18,7 @@ Creates a standard development environment for OSI simulation projects.
 ** mpi4py
 [[https://mpi4py.readthedocs.io/en/stable/][mpi4py]] provides MPI bindings for the Python programming language, allowing python programs to exploit multiple processors.
 ** petsc
-[[https://petsc.org/release/][PETSc]] is for the scalable solution of partial differential equations. 
+[[https://petsc.org/release/][PETSc]] is for the scalable solution of partial differential equations. Pets is currently compiles with a very basic configuration that doesn't include any external libraries (except ~BLAS/LAPACK~). Future improvements include adding options for external libraries and common compile configurations so the each ~flake.nix~ or ~nix~ environment can have a customized PETSc install. 
 ** pylit
 [[https://codeberg.org/milde/pylit][Pylit]] is a tool for literate programming. Used in the demo files of Firedrake
 ** recursivenodes
