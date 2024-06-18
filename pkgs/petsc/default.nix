@@ -125,6 +125,7 @@ stdenv.mkDerivation (finalAttrs: {
   # copy the source code for LSP integration
   installPhase = ''
     runHook preInstall
+    echo INSTALL PHASE
     cp -r $src/src $out/
     runHook postInstall
   '';
