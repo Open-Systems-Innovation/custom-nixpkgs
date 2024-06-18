@@ -112,7 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
         ''}
       )
   '';
-   configureScript = "python ./configure";
+  configureScript = "python ./configure";
 
   enableParallelBuilding = true;
 
@@ -121,6 +121,13 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = false;
   doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
   installCheckTarget = "check";
+
+  # copy the source code for LSP integration
+  installPhase = ''
+    runHook preInstall
+    cp -r $src/src $out/
+    runHook postInstall
+  '';
 
   meta = {
     description = "Portable Extensible Toolkit for Scientific computation";
