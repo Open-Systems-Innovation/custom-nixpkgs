@@ -93,6 +93,7 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [ ./filter_mpi_warnings.patch ];
 
   preConfigure = ''
+    cp -r $src/src $out/
     patchShebangs ./configure ./lib/petsc/bin
     configureFlagsArray+=(
       "--with-cc=mpicc"
@@ -126,7 +127,7 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     echo INSTALL PHASE
-    cp -r $src/src $out/
+    cp -r $src/src $out/src
     runHook postInstall
   '';
 
