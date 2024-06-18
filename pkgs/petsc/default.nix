@@ -93,9 +93,6 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [ ./filter_mpi_warnings.patch ];
 
   preConfigure = ''
-    ls $src
-    echo PRINTED SOURCE FILES
-    cp -r $src/src $out
     patchShebangs ./configure ./lib/petsc/bin
     configureFlagsArray+=(
       "--with-cc=mpicc"
