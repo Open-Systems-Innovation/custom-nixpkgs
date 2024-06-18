@@ -123,15 +123,6 @@ stdenv.mkDerivation (finalAttrs: {
   doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
   installCheckTarget = "check";
 
-  # copy the source code for LSP integration
-  installPhase = ''
-    runHook preInstall
-    echo INSTALL PHASE
-    mkdir $out/src
-    cp -r $src/src $out
-    runHook postInstall
-  '';
-
   meta = {
     description = "Portable Extensible Toolkit for Scientific computation";
     homepage = "https://www.mcs.anl.gov/petsc/index.html";
