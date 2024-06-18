@@ -127,6 +127,7 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     echo INSTALL PHASE
+    mkdir $out/src
     cp -r $src/src $out
     runHook postInstall
   '';
