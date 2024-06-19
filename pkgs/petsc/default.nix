@@ -29,6 +29,7 @@
  # withMumps ? false,
  # withChaco ? false,
  # buildEnv,
+  breakpointHook,
 }:
 
 let
@@ -81,6 +82,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     python3
     mpich
+    breakpointHook
     #blas
     #lapack
    # gfortran
@@ -97,6 +99,7 @@ stdenv.mkDerivation (finalAttrs: {
     configureFlagsArray+=(
       "--with-cc=mpicc"
       "--with-cxx=mpicxx"
+      "--with-fc=0"
 
       "--with-scalar-type=${petsc-scalar-type}"
       "--with-precision=${petsc-precision}"
@@ -116,11 +119,17 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = true;
 
+  installPhase = ''
+    mkdir -p $out/src
+    cp -r $src/src $out
+    make all check 
+  '';
+
   # only run tests after they have been placed into $out
   # workaround for `cannot find -lpetsc: No such file or directory`
-  doCheck = false;
-  doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
-  installCheckTarget = "check";
+  #doCheck = false;
+  #doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
+  #installCheckTarget = "check";
 
   meta = {
     description = "Portable Extensible Toolkit for Scientific computation";
