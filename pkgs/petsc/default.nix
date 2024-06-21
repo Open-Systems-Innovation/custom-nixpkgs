@@ -122,14 +122,14 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     mkdir -p $out/src
     cp -r $src/src $out
-    make all check 
+    make install
   '';
 
   # only run tests after they have been placed into $out
   # workaround for `cannot find -lpetsc: No such file or directory`
-  #doCheck = false;
-  #doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
-  #installCheckTarget = "check";
+  doCheck = false;
+  doInstallCheck = stdenv.hostPlatform == stdenv.buildPlatform;
+  installCheckTarget = "check";
 
   meta = {
     description = "Portable Extensible Toolkit for Scientific computation";
