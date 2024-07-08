@@ -9,7 +9,7 @@ pkgs.writeShellScriptBin "dev-env" ''
   cat <<'EOF' > flake.nix
     ${flakeNixContent}
   EOF
-  echo <<'EOF' > .envrc
+  cat <<'EOF' > .envrc
     ${envrcContent}
   EOF
   direnv allow
