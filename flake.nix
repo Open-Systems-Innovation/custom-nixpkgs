@@ -53,6 +53,7 @@
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
         petsc = pkgs.callPackage ./pkgs/petsc { };
+        petsc-project = pkgs.callPackage ./pkgs/petsc-project/package.nix { };
         petsc4py = pkgs.callPackage ./pkgs/petsc4py {
           inherit petsc; };
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
