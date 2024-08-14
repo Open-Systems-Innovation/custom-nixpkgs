@@ -2,8 +2,8 @@
   ...}:
 
 let
-  flakeNixContent = builtins.readFile ./dev_flake.nix;
-  envrcContent = builtins.readFile ./dev_envrc;
+  flakeNixContent = builtins.readFile ./petsc_flake.nix;
+  envrcContent = builtins.readFile ./petsc_envrc;
   makefileContent = builtins.readFile ./petsc_makefile;
   mainContent = builtins.readFile ./petsc_make.c;
 in
