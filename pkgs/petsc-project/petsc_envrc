@@ -1,0 +1,5 @@
+use flake
+if [ -z "${ENVIRONMENT_NAME:-}" ] && [ -n "${VIRTUAL_ENV}" ]; then
+    ENVIRONMENT_NAME=$(basename "${VIRTUAL_ENV}")
+fi
+export ENVIRONMENT_NAME
