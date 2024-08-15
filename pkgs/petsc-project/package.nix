@@ -7,7 +7,7 @@ let
   makefileContent = builtins.readFile ./petsc_makefile;
   mainContent = builtins.readFile ./petsc_main.c;
 in
-pkgs.writeShellScriptBin "dev-env" ''
+pkgs.writeShellScriptBin "petsc-project" ''
   cat <<'EOF' > flake.nix
     ${flakeNixContent}
   EOF
