@@ -40,6 +40,9 @@
             PETSC_DIR = "${pkgs.petsc}";
 
             shellHook = ''
+              if [ ! -f "TAGS" ]; then
+                  find $PETSC_DIR/src -name '*.c' | etags -
+              fi
               export VIRTUAL_ENV="Custom PETSc Environment"
             '';
           };
