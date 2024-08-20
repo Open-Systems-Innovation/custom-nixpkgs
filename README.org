@@ -80,5 +80,14 @@ And in your home-manager file, add the following
 
 Now you can add custom-nixpkgs to your ~home.packages~ and use them in local flakes.
 
+* Developing packages
+To develop a nix package using this repo, first create a new directory in the ~pkgs~ directory with a package.nix file in it. Add this file to the overlay and packages in the ~flake.nix~ file.
+
+To test the package run:
+#+BEGIN_SRC bash
+nix develop .#name-of-package
+#+END_SRC
+
+
 * Acknowledgments
 The main structure of this repo is based on the similar package by [[https://github.com/drupol/my-own-nixpkgs][Drupol]].

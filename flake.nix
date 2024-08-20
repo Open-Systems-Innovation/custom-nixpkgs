@@ -17,6 +17,7 @@
       overlays.default = final: prev: rec {
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
+        ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
@@ -48,6 +49,7 @@
       packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
+        ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
