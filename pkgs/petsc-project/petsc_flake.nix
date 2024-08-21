@@ -22,6 +22,7 @@
             # General packages
                pkgs.petsc
                pkgs.mpich
+               pkgs.hdf5
               # pkgs.clangd
               #  # Python packages
               #(pkgs.python3.withPackages (python-pkgs: [
