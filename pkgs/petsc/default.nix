@@ -17,8 +17,8 @@
  # p4est,
  # zlib, # propagated by p4est but required by petsc
   withHdf5 ? true,
- # hdf5-mpi,
-  hdf5,
+  hdf5-mpi,
+ # hdf5,
  # withPtscotch ? false,
  # scotch,
  # withSuperlu ? false,
@@ -105,9 +105,9 @@ stdenv.mkDerivation (finalAttrs: {
       "--with-scalar-type=${petsc-scalar-type}"
       "--with-precision=${petsc-precision}"
       "--with-64-bit-indices=${if with64BitIndices then "1" else "0"}"
-      "--download-hdf5"
 
       ${withLibrary "blaslapack" blaslapack true}
+      ${withLibrary "hdf5" hdf5-mpi true}
 
       ${lib.optionalString petsc-optimized ''
           "--with-debugging=0"
