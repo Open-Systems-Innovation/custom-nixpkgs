@@ -105,9 +105,9 @@ stdenv.mkDerivation (finalAttrs: {
       "--with-scalar-type=${petsc-scalar-type}"
       "--with-precision=${petsc-precision}"
       "--with-64-bit-indices=${if with64BitIndices then "1" else "0"}"
+      "--download-hdf5"
 
       ${withLibrary "blaslapack" blaslapack true}
-      ${withLibrary "hdf5" hdf5 true}
 
       ${lib.optionalString petsc-optimized ''
           "--with-debugging=0"
