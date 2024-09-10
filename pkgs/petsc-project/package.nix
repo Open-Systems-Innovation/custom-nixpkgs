@@ -6,7 +6,6 @@ let
   envrcContent = builtins.readFile ./petsc_envrc;
   makefileContent = builtins.readFile ./petsc_makefile;
   mainContent = builtins.readFile ./petsc_main.c;
-  optionsFileContent = builtins.readFile ./.petscrc;
 in
 pkgs.writeShellScriptBin "petsc-project" ''
   cat <<'EOF' > flake.nix
@@ -20,9 +19,6 @@ pkgs.writeShellScriptBin "petsc-project" ''
   EOF
   cat <<'EOF' > main.c
     ${mainContent}
-  EOF
-  cat <<'EOF' > main.c
-    ${optionsFileContent}
   EOF
   direnv allow
 ''
