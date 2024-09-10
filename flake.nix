@@ -23,6 +23,7 @@
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
+        petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
@@ -56,6 +57,7 @@
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
         petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc-project = pkgs.callPackage ./pkgs/petsc-project/package.nix { };
+        petscrc-update = pkgs.callPackage ./pkgs/petscrc-update/package.nix { };
         petsc4py = pkgs.callPackage ./pkgs/petsc4py {
           inherit petsc; };
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
