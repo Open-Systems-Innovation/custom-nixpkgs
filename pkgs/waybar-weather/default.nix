@@ -9,7 +9,7 @@ pkgs.stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "waybar-weather";
     rev = "main";  # Or specify a commit hash or tag
-    sha256 = "zXJf43Rs4OK8ozKolIu1KpGoYKwl785pQgPia4rCn3A=";
+    sha256 = "U/4qi0pxO6pbnpi7dFHVRd4ZTXCeGQmE/hbQI0BZPW8=";
   };
 
   # Runtime dependencies
@@ -27,6 +27,12 @@ pkgs.stdenv.mkDerivation {
     mkdir -p $out/bin
     cp weather.py $out/bin/waybar-weather
     chmod +x $out/bin/waybar-weather
+  '';
+
+  # Make sure the script runs with the Python environment
+  postInstall = ''
+    wrapProgram $out/bin/waybar-weather \
+      --prefix PATH : ${pkgs.python3}/bin
   '';
 
   meta = with pkgs.lib; {
