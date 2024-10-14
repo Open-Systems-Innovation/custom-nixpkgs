@@ -43,6 +43,7 @@
               packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
             }; in
           self;
+        waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
 
   python3Packages = final.python3.pkgs;
       };
@@ -64,6 +65,7 @@
         recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
         firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake {
           inherit mpi4py petsc pylit recursivenodes; }; 
+        waybar-weather = pkgs.callPackage ./pkgs/waybar-weather { };
       };
     };
 }
