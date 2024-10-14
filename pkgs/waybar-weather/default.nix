@@ -9,13 +9,17 @@ pkgs.stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "waybar-weather";
     rev = "main";  # Or specify a commit hash or tag
-    sha256 = "U/4qi0pxO6pbnpi7dFHVRd4ZTXCeGQmE/hbQI0BZPW8=";
+    sha256 = "zXJf43Rs4OK8ozKolIu1KpGoYKwl785pQgPia4rCn3A=";
   };
 
   # Runtime dependencies
   buildInputs = [
-    pkgs.python3
-    pkgs.python3Packages.requests
+    #pkgs.python3
+    #pkgs.python3Packages.requests
+    (pkgs.python3.withPackages (python-pkgs: with python-pkgs; [
+      # select Python packages here
+      requests
+    ]))
   ];
 
   # Install phase for Python script
