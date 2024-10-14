@@ -9,9 +9,9 @@ pkgs.stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "waybar-weather";
     rev = "main";  # Or specify a commit hash or tag
-    #sha256 = lib.fakeSha256;  # Replace with actual sha256 hash
     sha256 = "U/4qi0pxO6pbnpi7dFHVRd4ZTXCeGQmE/hbQI0BZPW8=";
   };
+
   # Runtime dependencies
   buildInputs = [
     pkgs.python3
