@@ -24,6 +24,7 @@
         petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
+        waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
@@ -35,7 +36,6 @@
               inherit mpi4py petsc pylit recursivenodes;}; 
           })
         ];
-      
         python3 =
           let
             self = prev.python3.override {
@@ -43,9 +43,7 @@
               packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
             }; in
           self;
-        waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
-
-  python3Packages = final.python3.pkgs;
+        python3Packages = final.python3.pkgs;
       };
 
       packages.${system} = rec {
