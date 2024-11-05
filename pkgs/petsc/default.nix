@@ -19,6 +19,9 @@
   withHdf5 ? true,
  # hdf5-mpi,
   hdf5,
+  metis,
+  parmetis,
+  withParmetis ? true,
  # withPtscotch ? false,
  # scotch,
  # withSuperlu ? false,
@@ -114,6 +117,12 @@ stdenv.mkDerivation (finalAttrs: {
           COPTFLAGS='-g -O3'
           FOPTFLAGS='-g -O3'
           CXXOPTFLAGS='-g -O3'
+        ''}
+      ${lib.optionalString withParmetis''
+        "--with-metis=1"
+        "--with-metis-dir=${metis}"
+        "--with-parmetis=1"
+        "--with-parmetis-dir=${parmetis}"
         ''}
       )
   '';
