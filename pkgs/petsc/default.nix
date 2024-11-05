@@ -118,7 +118,7 @@ stdenv.mkDerivation (finalAttrs: {
           FOPTFLAGS='-g -O3'
           CXXOPTFLAGS='-g -O3'
         ''}
-      ${lib.optionalString withParmetis''
+      ${lib.optionalString withParmetis ''
         "--with-metis=1"
         "--with-metis-dir=${metis}"
         "--with-parmetis=1"
