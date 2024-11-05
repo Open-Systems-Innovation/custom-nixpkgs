@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitLab,
+  fetchurl,
   python3,
   blas,
   lapack,
@@ -19,11 +20,8 @@
   withHdf5 ? true,
  # hdf5-mpi,
   hdf5,
-  metis,
-  parmetis,
-  withParmetis ? true,
- # withPtscotch ? false,
- # scotch,
+  withPtscotch ? true,
+  scotch,
  # withSuperlu ? false,
  # superlu,
  # withHypre ? false,
@@ -33,7 +31,7 @@
  # withMumps ? false,
  # withChaco ? false,
  # buildEnv,
-  breakpointHook,
+ # breakpointHook,
 }:
 
 let
@@ -86,7 +84,8 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     python3
     mpich
-    breakpointHook
+    #breakpointHook
+    scotch
     #blas
     #lapack
    # gfortran
@@ -111,6 +110,7 @@ stdenv.mkDerivation (finalAttrs: {
 
       ${withLibrary "blaslapack" blaslapack true}
       ${withLibrary "hdf5" hdf5 true}
+      ${withLibrary "scotch" scotch true}
 
       ${lib.optionalString petsc-optimized ''
           "--with-debugging=0"
@@ -118,12 +118,7 @@ stdenv.mkDerivation (finalAttrs: {
           FOPTFLAGS='-g -O3'
           CXXOPTFLAGS='-g -O3'
         ''}
-      ${lib.optionalString withParmetis ''
-        "--with-metis=1"
-        "--with-metis-dir=${metis}"
-        "--with-parmetis=1"
-        "--with-parmetis-dir=${parmetis}"
-        ''}
+
       )
   '';
   
