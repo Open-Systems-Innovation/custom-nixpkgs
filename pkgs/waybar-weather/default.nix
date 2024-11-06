@@ -9,7 +9,7 @@ pkgs.stdenv.mkDerivation {
     owner = "Open-Systems-Innovation";
     repo = "waybar-weather";
     rev = "main";  # Or specify a commit hash or tag
-    sha256 = "U/4qi0pxO6pbnpi7dFHVRd4ZTXCeGQmE/hbQI0BZPW8=";
+    sha256 = "sha256-t6ReobQgL66jhX7Q/5bjxgjeu0CwuJGQyA339f+44/k=";
   };
 
   # Runtime dependencies

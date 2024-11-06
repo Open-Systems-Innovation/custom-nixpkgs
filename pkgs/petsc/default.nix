@@ -19,8 +19,8 @@
   withHdf5 ? true,
   hdf5-mpi,
  # hdf5,
- # withPtscotch ? true,
- # scotch,
+  withPtscotch ? true,
+  scotch,
  # withSuperlu ? false,
  # superlu,
  # withHypre ? false,
@@ -28,7 +28,7 @@
  # withScalapack ? false,
  # scalapack,
  # withMumps ? false,
- # withChaco ? false,
+ # withChaco ? true,
  # buildEnv,
  # breakpointHook,
 }:
@@ -64,6 +64,14 @@ let
       ''}
     '';
   hdf5 = (hdf5-mpi.override { inherit mpi; });
+  scotch' =
+  (scotch.override {
+    inherit mpi;
+    #withIntSize64 = with64BitIndices;
+  }).overrideAttrs
+    (attrs: {
+      buildFlags = [ "ptesmumps esmumps" ];
+    });
 in
 
 stdenv.mkDerivation (finalAttrs: {
@@ -110,6 +118,7 @@ stdenv.mkDerivation (finalAttrs: {
 
       ${withLibrary "blaslapack" blaslapack true}
       ${withLibrary "hdf5" hdf5 withHdf5}
+      ${withLibrary "ptscotch" scotch' withPtscotch}
 
       ${lib.optionalString petsc-optimized ''
           "--with-debugging=0"
