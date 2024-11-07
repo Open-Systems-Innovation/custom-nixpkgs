@@ -20,9 +20,10 @@
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
         ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
+        mpi = pkgs.callPackage ./pkgs/mpi { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-        petsc = pkgs.callPackage ./pkgs/petsc { };
+        petsc = pkgs.callPackage ./pkgs/petsc { inherit mpi; };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
@@ -54,6 +55,7 @@
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
+        mpi = pkgs.callPackage ./pkgs/mpi { };
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
         petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc-project = pkgs.callPackage ./pkgs/petsc-project/package.nix { };

@@ -63,7 +63,9 @@ let
         "--with-${name}-dir=${combinedPkg}"
       ''}
     '';
+
   hdf5 = (hdf5-mpi.override { inherit mpi; });
+
   scotch' =
   (scotch.override {
     inherit mpi;
@@ -82,7 +84,6 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "petsc";
     repo = "petsc";
     rev = "v${finalAttrs.version}";
-    #hash = "sha256-Td9Avc8ttQt3cRhmB7cCbQU+DaRjrOuVS8wybzzROhM=";
     hash = "sha256-8Ee1uXyj38lVWL/niTmSdmBalXSvsdHL2edUGgLjE9Y=";
   };
 
