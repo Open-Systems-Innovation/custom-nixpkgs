@@ -16,23 +16,30 @@
     in
     {
       overlays.default = final: prev: rec {
-        hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
-        ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
+               ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
+        hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         mpi = pkgs.callPackage ./pkgs/mpi { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-        petsc = pkgs.callPackage ./pkgs/petsc { inherit mpi; };
+        petsc = pkgs.callPackage ./pkgs/petsc {
+          inherit mpi;
+        };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
+
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
+            dolfinx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
+              inherit mpi petsc petsc4py mpi4py;
+            };
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
             mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
             petsc4py = pkgs.python3Packages.callPackage ./pkgs/petsc4py {
-              inherit petsc; };
+              inherit petsc;
+            };
             recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
             firedrake = prev.python3Packages.callPackage ./pkgs/firedrake {
               inherit mpi4py petsc pylit recursivenodes;}; 
@@ -51,6 +58,10 @@
       packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
+        dolfinx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
+          inherit mpi;
+          inherit petsc;
+        };
         ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
         scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
