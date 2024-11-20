@@ -3,16 +3,29 @@
   stdenv,
   buildPythonPackage,
   fetchFromGitHub,
+
+  boost,
+  mpi4py,
+  parmetis,
+  petsc,
+  petsc4py,
   cmake,
   python3,
+  pkg-config,
+  pugixml,
+  spdlog,
   mpi,
   hdf5-mpi,
+  cffi,
+  nanobind,
+  numpy,
+  scikit-build-core,
 }:
 
 let
   hdf5 = (hdf5-mpi.override { inherit mpi; });
 
-  cppdrv = stdenv.mkDerivation {
+  cppdrv = stdenv.mkDerivation rec {
     pname = "fenics";
     version = "v0.9.0";
     
@@ -48,7 +61,7 @@ buildPythonPackage rec {
   version = "";
   pyproject = true;
 
-  src = fetchFromGitlab {
+  src = fetchFromGitHub {
     owner = "FEniCS";
     repo = "dolfinx";
     rev = version;
@@ -57,8 +70,8 @@ buildPythonPackage rec {
 
   buildInputs = [
     cppdrv
-    python312Packages.cffi
-    python312Packages.nanobind
+    cffi
+    nanobind
     numpy
     scikit-build-core
     mpi4py
