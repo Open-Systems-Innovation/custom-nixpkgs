@@ -1,5 +1,6 @@
 {
   lib,
+  callPackage,
   stdenv,
   buildPythonPackage,
   fetchFromGitHub,
@@ -14,6 +15,7 @@
   python3,
   pkg-config,
   pugixml,
+  setuptools,
   spdlog,
   scotch,
   mpi,
@@ -36,35 +38,11 @@ let
         buildFlags = [ "ptesmumps esmumps" ];
       });
 
-  basix = stdenv.mkDerivation rec {
-    pname = "basix";
-    version = "0.9.0";
+  basix = callPackage ./basix.nix { inherit nanobind; };
 
-    src = fetchFromGitHub {
-      owner = "FEniCS";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "sha256-jLQMDt6zdl+oixd5Qevn4bvxBsXpTNcbH2Os6TC9sRQ=";
-    };
+  ffcx = callPackage ./ffcx.nix { };
 
-    nativeBuildInputs = [
-      cmake
-    ];
-
-    buildInputs = [
-      blas
-      nanobind
-    ];
-
-    meta = with lib; {
-      description = "FEniCSx finite element basis evaluation library";
-      homepage = "https://github.com/FEniCS/basix";
-      license = licenses.mit;
-      maintainers = with maintainers; [  ];
-    };
-  };
-
-  cppdrv = stdenv.mkDerivation rec {
+  cpp-core = stdenv.mkDerivation rec {
     pname = "dolfinx";
     version = "v0.9.0";
     
@@ -74,13 +52,14 @@ let
       rev = version;
       hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
     };
-
+ 
     prePatch = ''
       cd cpp
     '';
-
+ 
     buildInputs = [
       boost
+      ffcx
       hdf5
       mpi4py
       petsc
@@ -90,13 +69,14 @@ let
       scotch'
       spdlog
       basix
+      #basix-cpp
     ];
-
+ 
     nativeBuildInputs = [
       cmake
     ];
-
-  };
+ 
+ };
 in
 
 buildPythonPackage rec {
@@ -112,7 +92,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    cppdrv
+    cpp-core
     cffi
     nanobind
     numpy

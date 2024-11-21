@@ -33,7 +33,7 @@
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
             dolfinx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
-              inherit mpi petsc petsc4py mpi4py;
+              inherit mpi petsc petsc4py mpi4py nanobind;
             };
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
             mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
@@ -60,7 +60,7 @@
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
         dolfinx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
-          inherit mpi petsc petsc4py;
+          inherit mpi petsc petsc4py nanobind;
         };
         ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
