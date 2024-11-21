@@ -37,6 +37,7 @@
             };
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
             mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
+            nanobind = pkgs.python3Packages.callPackage ./pkgs/nanobind { };
             petsc4py = pkgs.python3Packages.callPackage ./pkgs/petsc4py {
               inherit petsc;
             };
@@ -59,8 +60,7 @@
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
         dolfinx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
-          inherit mpi;
-          inherit petsc;
+          inherit mpi petsc petsc4py;
         };
         ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
         hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
@@ -68,10 +68,11 @@
         libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
         mpi = pkgs.callPackage ./pkgs/mpi { };
         mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
+        nanobind = pkgs.python3Packages.callPackage ./pkgs/nanobind { };
         petsc = pkgs.callPackage ./pkgs/petsc { };
         petsc-project = pkgs.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = pkgs.callPackage ./pkgs/petscrc-update/package.nix { };
-        petsc4py = pkgs.callPackage ./pkgs/petsc4py {
+        petsc4py = pkgs.python3Packages.callPackage ./pkgs/petsc4py {
           inherit petsc; };
         pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
         recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
