@@ -97,6 +97,8 @@ stdenv.mkDerivation (finalAttrs: {
     openssh
   ];
 
+  SCOTCH_DIR = "${scotch'}/";
+
   nativeCheckInputs = [ openssh mpi ];
   # Both OpenMPI and MPICH get confused by the sandbox environment and spew errors like this (both to stdout and stderr):
   #     [hwloc/linux] failed to find sysfs cpu topology directory, aborting linux discovery.

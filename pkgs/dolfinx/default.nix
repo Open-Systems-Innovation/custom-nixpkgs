@@ -23,6 +23,9 @@
   cffi,
   nanobind,
   numpy,
+  ninja,
+  pathspec,
+  pyproject-metadata,
   scikit-build-core,
 }:
 
@@ -40,10 +43,12 @@ let
 
   basix = callPackage ./basix.nix { inherit nanobind; };
 
-  ffcx = callPackage ./ffcx.nix { };
+  ufl = callPackage ./ufl.nix { };
+  
+  ffcx = callPackage ./ffcx.nix { inherit basix ufl; };
 
   cpp-core = stdenv.mkDerivation rec {
-    pname = "dolfinx";
+    pname = "dolfinx-cpp";
     version = "v0.9.0";
     
     src = fetchFromGitHub {
@@ -56,7 +61,7 @@ let
     prePatch = ''
       cd cpp
     '';
- 
+
     buildInputs = [
       boost
       ffcx
@@ -66,16 +71,24 @@ let
       petsc4py
       pkg-config
       pugixml
-      scotch'
       spdlog
       basix
-      #basix-cpp
     ];
  
     nativeBuildInputs = [
       cmake
+      scotch
     ];
- 
+  
+    cmakeFlags = [
+      "-DDOLFINX_SKIP_BUILD_TESTS=on"
+      "-DCMAKE_BUILD_TYPE=Release"
+    ];
+
+    fixupPhase = ''
+    pwd
+    ls
+   '';
  };
 in
 
@@ -91,6 +104,12 @@ buildPythonPackage rec {
     hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
   };
 
+  preBuild = ''
+    pwd
+    ls
+    cd ../../python
+  '';
+
   buildInputs = [
     cpp-core
     cffi
@@ -98,8 +117,43 @@ buildPythonPackage rec {
     numpy
     scikit-build-core
     mpi4py
+    scotch
+    pathspec
+    pyproject-metadata
+    mpi
+    spdlog
+    pugixml
+    boost
+    basix
+    hdf5
+    ffcx
+    ufl
+    pkg-config
+    petsc4py
+    petsc
   ];
 
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
+
+  cmakeFlags = [
+    "-DDOLFINX_SKIP_BUILD_TESTS=on"
+    "-DCMAKE_BUILD_TYPE=Release"
+  ];
+
+  preConfigure = ''
+    pwd
+    ls
+    cd cpp
+  '';
+
+  installPhase = ''
+    echo SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    pwd
+    ls
+  '';
   meta = {
     description = "Next generation FEniCS problem solving environment";
     homepage = "https://github.com/FEniCS/dolfinx";

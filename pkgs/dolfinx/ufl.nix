@@ -4,29 +4,32 @@
   fetchFromGitHub,
   setuptools,
   numpy,
-  pytestCheckHook,
 }:
 
 buildPythonPackage rec {
   pname = "ufl";
-  version = "20240312.0";
-  pyproject = true;
+  version = "2024.2.0";
+  format = "pyproject";
 
   src = fetchFromGitHub {
-    owner = "firedrakeproject";
-    repo = "ufl";
-    rev = "Firedrake_${version}";
-    hash = "sha256-abxk1hD1SO1PfzrqLCYd2lbHiZE+7ahOzIau3OW95U4=";
+    owner = "FEniCS";
+    repo = pname;
+    rev = version;
+    sha256 = "sha256-YKLTXkN9cIKR545/JRN7zA7dNoVZEVIyO+JaL1V5ajU=";
   };
-
-  postPatch = ''
-    substituteInPlace pyproject.toml \
-        --replace-fail ', "pip>=22.3"' ""
-  '';
 
   build-system = [ setuptools ];
 
-  dependencies = [ numpy ];
+  buildInputs = [
+    numpy
+  ];
+  
+  pythonImportsCheck = [ "ufl" ];
 
-  nativeCheckInputs = [ pytestCheckHook ];
+  meta = with lib; {
+    description = "UFL - Unified Form Language";
+    homepage = "https://github.com/FEniCS/ufl";
+    maintainers = with maintainers; [  ];
+  };
 }
+

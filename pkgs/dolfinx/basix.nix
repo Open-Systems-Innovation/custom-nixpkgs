@@ -10,6 +10,10 @@
   setuptools,
   nanobind,
   scikit-build-core,
+  ninja,
+  pathspec,
+  pyproject-metadata,
+  numpy
 }:
 
 let
@@ -24,24 +28,18 @@ let
       sha256 = "sha256-jLQMDt6zdl+oixd5Qevn4bvxBsXpTNcbH2Os6TC9sRQ=";
     };
 
-    buildPhase = ''
-      runHook preBuild
-
-      echo OH SHIT!!!!!!!!!!
-      pwd
-      ls
-      cd cpp
-
-      runHook postBuild
-    '';
-
     nativeBuildInputs = [
       cmake
+      ninja
     ];
 
     buildInputs = [
       blas
       nanobind
+    ];
+
+    cmakeFlags = [
+      "-DCMAKE_BUILD_TYPE=Release"
     ];
 
     meta = with lib; {
@@ -62,11 +60,9 @@ buildPythonPackage rec {
       sha256 = "sha256-KiHhWo7Y86kZRnUq/QWBYIWaL1YE32WlOya8lsMsDtQ=";
     };
 
-#    buildPhase = ''
-#      runHook preBuild
-#
-#      runHook postBuild
-#    '';
+    preBuild = ''
+      cd ..
+    '';
 
     build-system = [ setuptools ];
 
@@ -75,10 +71,14 @@ buildPythonPackage rec {
       scikit-build-core
       nanobind
       blas
+      pathspec
+      pyproject-metadata
+      numpy
     ];
  
     nativeBuildInputs = [
       cmake
+      ninja
     ];   
 
     nativeCheckInputs = [ ];

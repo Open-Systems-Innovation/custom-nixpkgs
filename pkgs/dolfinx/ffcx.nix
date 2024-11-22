@@ -6,6 +6,7 @@
   cffi,
   numpy,
   basix,
+  ufl,
 }:
 
 buildPythonPackage rec {
@@ -17,13 +18,14 @@ buildPythonPackage rec {
     inherit pname version;
     sha256 = "sha256-VpBDL9hmTPLTGIU4gxXJyESyG6VYFG7gEixNbvMitM8=";
   };
-  
+
   build-system = [ setuptools ];
 
   buildInputs = [
     cffi
     numpy
     basix
+    ufl
   ];
 
   nativeBuildInputs = [
@@ -37,25 +39,4 @@ buildPythonPackage rec {
     homepage = "https://github.com/FEniCS/ffcx";
     maintainers = with maintainers; [  ];
   };
-
-#  ffcx = stdenv.mkDerivation rec {
-#    pname = "ffcx";
-#    version = "0.9.0";
-#    
-#    src = fetchFromGitHub {
-#      owner = "FEniCS";
-#      repo = pname;
-#      rev = "v${version}";
-#      sha256 = "sha256-eAV//RLbrxyhqgbZ2DiR7qML7xfgPn0/Seh+2no0x8w=";
-#    };
-# 
-#    prePatch = ''
-#      cd cmake
-#    '';   
-#
-#    buildInputs = [ ];
-# 
-#    nativeBuildInputs = [
-#      cmake
-#    ];   
 }
