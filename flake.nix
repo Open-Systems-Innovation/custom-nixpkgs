@@ -29,7 +29,12 @@
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
+        fenicsx = prev.python311Packages.callPackage ./pkgs/fenicsx {
+          inherit mpi petsc petsc4py mpi4py;
+        };
+        petsc4py = prev.python311Packages.callPackage ./pkgs/petsc4py { inherit petsc; };
 
+        mpi4py = prev.python311Packages.callPackage ./pkgs/mpi4py { };
 #        pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
 #          (python-final: python-prev: rec { 
 #            fenicsx = python-final.callPackage ./pkgs/fenicsx {
@@ -55,28 +60,28 @@
 #          self;
 #        python3Packages = final.python3.pkgs;
       # Python extensions
-      pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
-        (python-final: python-prev: rec {
-          # Custom Python packages
-          fenicsx = python-final.callPackage ./pkgs/fenicsx {
-            inherit mpi petsc petsc4py mpi4py nanobind;
-          };
-          pylit = python-final.callPackage ./pkgs/pylit { };
-          mpi4py = python-final.callPackage ./pkgs/mpi4py { };
-          nanobind = python-final.callPackage ./pkgs/nanobind { };
-          petsc4py = python-final.callPackage ./pkgs/petsc4py { inherit petsc; };
-          recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
-          firedrake = python-final.callPackage ./pkgs/firedrake {
-            inherit mpi4py petsc pylit recursivenodes;
-          };
-        })
-      ];
-      
-      # Extend Python 3 packages with the extensions
-      python3 = prev.python3.override {
-        packageOverrides = prev.lib.composeExtensions prev.pythonPackagesExtensions;
-      };
-      python3Packages = final.python3.pkgs;
+#      pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
+#        (python-final: python-prev: rec {
+#          # Custom Python packages
+#          fenicsx = python-prev.fenicsx.callPackage ./pkgs/fenicsx {
+#            inherit mpi petsc petsc4py mpi4py nanobind;
+#          };
+#          pylit = python-final.callPackage ./pkgs/pylit { };
+#          mpi4py = python-final.callPackage ./pkgs/mpi4py { };
+#          #nanobind = python-final.callPackage ./pkgs/nanobind { };
+#          petsc4py = python-final.callPackage ./pkgs/petsc4py { inherit petsc; };
+#          recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
+#          firedrake = python-final.callPackage ./pkgs/firedrake {
+#            inherit mpi4py petsc pylit recursivenodes;
+#          };
+#        })
+#      ];
+#      
+#      # Extend Python 3 packages with the extensions
+#      python3 = prev.python3.override {
+#        packageOverrides = prev.lib.composeExtensions prev.pythonPackagesExtensions;
+#      };
+#      python3Packages = final.python3.pkgs;
     };
 
       packages.${system} = rec {
