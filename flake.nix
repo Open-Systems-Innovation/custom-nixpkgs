@@ -32,7 +32,7 @@
 
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
-            fenicsx = pkgs.python3Packages.callPackage ./pkgs/fenicsx {
+            fenicsx = python-final.callPackage ./pkgs/fenicsx {
               inherit mpi petsc petsc4py mpi4py nanobind;
             };
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };

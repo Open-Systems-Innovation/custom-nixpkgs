@@ -1,6 +1,5 @@
 {
   lib,
-  callPackage,
   stdenv,
   buildPythonPackage,
   fetchFromGitHub,
@@ -188,12 +187,11 @@ let
       pkg-config
       pugixml
       spdlog
-      basix
+      scotch
     ];
  
     nativeBuildInputs = [
       cmake
-      scotch
     ];
 
     #preConfigure= ''
@@ -221,13 +219,7 @@ let
 
     propagatedBuildInputs = [
       dolfinx-cpp-core
-      scotch
-      numpy
-      pathspec
       mpi
-      pkg-config
-      ffcx
-      ufl
     ];
     
     nativeBuildInputs = [
