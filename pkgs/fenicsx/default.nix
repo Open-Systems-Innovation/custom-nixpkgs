@@ -171,7 +171,7 @@ let
     src = fetchFromGitHub {
       owner = "FEniCS";
       repo = "dolfinx";
-      rev = version;
+      rev = "v${version}";
       hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
     };
  
