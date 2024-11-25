@@ -176,6 +176,8 @@ let
       hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
     };
  
+    sourceRoot = "${src.name}/cpp";
+
     propagatedBuildInputs = [
       boost
       ffcx
@@ -194,9 +196,9 @@ let
       scotch
     ];
 
-    preConfigure= ''
-      cd cpp
-    ''; 
+    #preConfigure= ''
+    #  cd cpp
+    #''; 
 
     cmakeFlags = [
       "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it cant find Scotch
@@ -204,8 +206,7 @@ let
       "-DCMAKE_INSTALL_LIBDIR=lib"
       "-DCMAKE_INSTALL_INCLUDEDIR=include"
     ];
-
- };
+  };
 
   dolfinx = buildPythonPackage rec {
     pname = "dolfinx";
@@ -221,6 +222,7 @@ let
     propagatedBuildInputs = [
       dolfinx-cpp-core
       scotch
+      numpy
       pathspec
       mpi
       pkg-config
@@ -244,6 +246,13 @@ let
       "-DCMAKE_BUILD_TYPE=Release"
     ];
 
+    preBuild = ''
+      echo @@@@@@@@@@@@@@@@@@@ PREBUILD @@@@@@@@@@@@@@@@@@@@@
+      pwd
+      ls
+      cd ..
+    '';
+
     meta = {
       description = "Next generation FEniCS problem solving environment";
       homepage = "https://github.com/FEniCS/dolfinx";
@@ -251,4 +260,4 @@ let
     };
   };
 in
-ffcx
+dolfinx
