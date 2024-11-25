@@ -110,6 +110,7 @@ let
   ufl = buildPythonPackage rec {
     pname = "ufl";
     version = "2024.2.0";
+
     format = "pyproject";
     
     src = fetchFromGitHub {
@@ -250,4 +251,4 @@ let
     };
   };
 in
-ufl
+ffcx
