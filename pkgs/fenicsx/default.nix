@@ -46,6 +46,8 @@ let
       sha256 = "sha256-jLQMDt6zdl+oixd5Qevn4bvxBsXpTNcbH2Os6TC9sRQ=";
     };
 
+    sourceRoot = "${src.name}/cpp";
+
     nativeBuildInputs = [
       cmake
       ninja
@@ -53,10 +55,6 @@ let
 
     propagatedBuildInputs = [
       blas
-      nanobind
-    ];
-
-    buildInputs = [
       nanobind
     ];
 
