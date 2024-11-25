@@ -222,6 +222,8 @@ let
       pathspec
       mpi
       pkg-config
+      ffcx
+      ufl
     ];
     
     nativeBuildInputs = [
