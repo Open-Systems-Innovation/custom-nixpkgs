@@ -11,7 +11,7 @@
   petsc,
   petsc4py,
   cmake,
-  python3,
+  python311,
   pkg-config,
   pugixml,
   setuptools,
