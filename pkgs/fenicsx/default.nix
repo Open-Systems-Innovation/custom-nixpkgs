@@ -210,6 +210,7 @@ let
     pname = "dolfinx";
     inherit version;
 
+    NIX_DEBUG = 3;
     format = "pyproject";
 
     src = dolfinx-cpp-core.src;
@@ -236,10 +237,10 @@ let
       cp ../COPYING* .
     '';
 
-    dontUseCmakeConfigure = true;
-    
+    #dontUseCmakeConfigure = true;
+
     cmakeFlags = [
-      "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it cant find Scotch
+      "-DCMAKE_BUILD_TYPE=Release"
     ];
 
     meta = {
@@ -249,4 +250,4 @@ let
     };
   };
 in
-dolfinx
+ufl
