@@ -32,7 +32,7 @@
 
         pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
           (python-final: python-prev: rec { 
-            fenicsx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
+            fenicsx = pkgs.python3Packages.callPackage ./pkgs/fenicsx {
               inherit mpi petsc petsc4py mpi4py nanobind;
             };
             pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
@@ -59,7 +59,7 @@
       packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
-        fenicsx = pkgs.python3Packages.callPackage ./pkgs/dolfinx {
+        fenicsx = pkgs.python3Packages.callPackage ./pkgs/fenicsx {
           inherit mpi petsc petsc4py mpi4py nanobind;
         };
         ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };

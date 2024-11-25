@@ -80,10 +80,6 @@ let
       sha256 = "sha256-KiHhWo7Y86kZRnUq/QWBYIWaL1YE32WlOya8lsMsDtQ=";
     };
 
-    preBuild = ''
-      cd ..
-    '';
-
     build-system = [ setuptools ];
 
     propagatedBuildInputs = [
@@ -98,6 +94,10 @@ let
       cmake
       ninja
     ];   
+
+    preBuild = ''
+      cd ..
+    '';
 
     meta = with lib; {
       description = "Next generation FEniCS Form Compiler for finite element forms";
@@ -121,7 +121,7 @@ let
     
     build-system = [ setuptools ];
     
-    propagatedBuildInputs = [ ];
+    propagatedBuildInputs = [ basix ];
     
     pythonImportsCheck = [ "ufl" ];
     
@@ -165,7 +165,7 @@ let
   };
 
   dolfinx-cpp-core = stdenv.mkDerivation rec {
-    pname = "dolfinx-cpp";
+    pname = "dolfinx";
     inherit version;
     
     src = fetchFromGitHub {
@@ -175,10 +175,6 @@ let
       hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
     };
  
-    preBuild = ''
-      cd cpp
-    '';
-
     propagatedBuildInputs = [
       boost
       ffcx
@@ -196,29 +192,30 @@ let
       cmake
       scotch
     ];
-  
+
+    preConfigure= ''
+      cd cpp
+    ''; 
+
     cmakeFlags = [
-      "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it can
+      "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it cant find Scotch
       "-DCMAKE_BUILD_TYPE=Release"
+      "-DCMAKE_INSTALL_LIBDIR=lib"
+      "-DCMAKE_INSTALL_INCLUDEDIR=include"
     ];
+
  };
 
   dolfinx = buildPythonPackage rec {
     pname = "dolfinx";
-    version = "0.9.0";
-    pyproject = true;
-    
-    src = fetchFromGitHub {
-      owner = "FEniCS";
-      repo = "dolfinx";
-      rev = "v${version}";
-      hash = "sha256-1MM04Z3C3gD2Bb+Emg8PoHmgsXq0n6RkhFdwNlCJSh4=";
-    };
-    
-    preBuild = ''
-      cd ../../python
-    '';
-    
+    inherit version;
+
+    format = "pyproject";
+
+    src = dolfinx-cpp-core.src;
+
+    sourceRoot = "${src.name}/python";
+
     propagatedBuildInputs = [
       dolfinx-cpp-core
       scotch
@@ -231,21 +228,17 @@ let
       cmake
       ninja
     ];
+
+    postPatch = ''
+      sed -i 's|\.\./COPYING*|COPYING|' pyproject.toml
+      cp ../COPYING* .
+    '';
+
+    dontUseCmakeConfigure = true;
     
     cmakeFlags = [
-      "-DDOLFINX_SKIP_BUILD_TESTS=on"
-      "-DCMAKE_BUILD_TYPE=Release"
+      "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it cant find Scotch
     ];
-    
-    preConfigure = ''
-      cd cpp
-    '';
-    
-    preInstallPhase = ''
-      echo SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-      pwd
-      ls
-    '';
 
     meta = {
       description = "Next generation FEniCS problem solving environment";
