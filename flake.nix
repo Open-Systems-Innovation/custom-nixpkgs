@@ -17,7 +17,7 @@
     {
       overlays.default = final: prev: rec {
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
-               ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
+        ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         hypre = prev.callPackage ./pkgs/hypre/package.nix { };
         mpi = prev.callPackage ./pkgs/mpi { };
@@ -30,31 +30,54 @@
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
 
-        pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
-          (python-final: python-prev: rec { 
-            fenicsx = python-final.callPackage ./pkgs/fenicsx {
-              inherit mpi petsc petsc4py mpi4py nanobind;
-            };
-            pylit = python-final.callPackage ./pkgs/pylit { };
-            mpi4py = python-final.callPackage ./pkgs/mpi4py { };
-            nanobind = python-final.callPackage ./pkgs/nanobind { };
-            petsc4py = python-final.callPackage ./pkgs/petsc4py {
-              inherit petsc;
-            };
-            recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
-            firedrake = python-final.callPackage ./pkgs/firedrake {
-              inherit mpi4py petsc pylit recursivenodes;}; 
-          })
-        ];
-        python3 =
-          let
-            self = prev.python3.override {
-              inherit self;
-              packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
-            }; in
-          self;
-        python3Packages = final.python3.pkgs;
+#        pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
+#          (python-final: python-prev: rec { 
+#            fenicsx = python-final.callPackage ./pkgs/fenicsx {
+#              inherit mpi petsc petsc4py mpi4py nanobind;
+#            };
+#            pylit = python-final.callPackage ./pkgs/pylit { };
+#            mpi4py = python-final.callPackage ./pkgs/mpi4py { };
+#            nanobind = python-final.callPackage ./pkgs/nanobind { };
+#            petsc4py = python-final.callPackage ./pkgs/petsc4py {
+#              inherit petsc;
+#            };
+#            recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
+#            firedrake = python-final.callPackage ./pkgs/firedrake {
+#              inherit mpi4py petsc pylit recursivenodes;}; 
+#          })
+#        ];
+#        python3 =
+#          let
+#            self = prev.python3.override {
+#              inherit self;
+#              packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
+#            }; in
+#          self;
+#        python3Packages = final.python3.pkgs;
+      # Python extensions
+      pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
+        (python-final: python-prev: rec {
+          # Custom Python packages
+          fenicsx = python-final.callPackage ./pkgs/fenicsx {
+            inherit mpi petsc petsc4py mpi4py nanobind;
+          };
+          pylit = python-final.callPackage ./pkgs/pylit { };
+          mpi4py = python-final.callPackage ./pkgs/mpi4py { };
+          nanobind = python-final.callPackage ./pkgs/nanobind { };
+          petsc4py = python-final.callPackage ./pkgs/petsc4py { inherit petsc; };
+          recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
+          firedrake = python-final.callPackage ./pkgs/firedrake {
+            inherit mpi4py petsc pylit recursivenodes;
+          };
+        })
+      ];
+      
+      # Extend Python 3 packages with the extensions
+      python3 = prev.python3.override {
+        packageOverrides = prev.lib.composeExtensions prev.pythonPackagesExtensions;
       };
+      python3Packages = final.python3.pkgs;
+    };
 
       packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
