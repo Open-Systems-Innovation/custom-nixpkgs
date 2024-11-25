@@ -11,7 +11,6 @@
   petsc,
   petsc4py,
   cmake,
-  python3,
   pkg-config,
   pugixml,
   setuptools,
@@ -127,13 +126,12 @@ let
 
     propagatedBuildInputs = [
       #basix-cpp-core
-      python3
       nanobind
-      blas
       scikit-build-core
       pathspec
       pyproject-metadata
       numpy
+      blas
     ];
 
     nativeBuildInputs = [
@@ -193,15 +191,21 @@ let
     
     propagatedBuildInputs = [
       cffi
-      basix
       ufl
     ];
     
     nativeBuildInputs = [
-      basix
+      ninja
+      cmake
     ];   
-    
-    pythonImportsCheck = [ "ffcx" ];
+
+    preConfigure = ''
+      cd cmake
+    '';
+
+    preBuild = ''
+      cd ../..
+    '';
     
     meta = with lib; {
       description = "Next generation FEniCS Form Compiler for finite element forms";
@@ -252,7 +256,6 @@ let
     pname = "dolfinx";
     inherit version;
 
-    NIX_DEBUG = 3;
     format = "pyproject";
 
     src = dolfinx-cpp-core.src;

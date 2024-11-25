@@ -19,11 +19,11 @@
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
                ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
-        hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
-        mpi = pkgs.callPackage ./pkgs/mpi { };
-        scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
+        hypre = prev.callPackage ./pkgs/hypre/package.nix { };
+        mpi = prev.callPackage ./pkgs/mpi { };
+        scotch = prev.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-        petsc = pkgs.callPackage ./pkgs/petsc {
+        petsc = prev.callPackage ./pkgs/petsc {
           inherit mpi;
         };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
@@ -35,14 +35,14 @@
             fenicsx = python-final.callPackage ./pkgs/fenicsx {
               inherit mpi petsc petsc4py mpi4py nanobind;
             };
-            pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
-            mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
-            nanobind = pkgs.python3Packages.callPackage ./pkgs/nanobind { };
-            petsc4py = pkgs.python3Packages.callPackage ./pkgs/petsc4py {
+            pylit = python-final.callPackage ./pkgs/pylit { };
+            mpi4py = python-final.callPackage ./pkgs/mpi4py { };
+            nanobind = python-final.callPackage ./pkgs/nanobind { };
+            petsc4py = python-final.callPackage ./pkgs/petsc4py {
               inherit petsc;
             };
-            recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
-            firedrake = prev.python3Packages.callPackage ./pkgs/firedrake {
+            recursivenodes = python-final.callPackage ./pkgs/recursivenodes { };
+            firedrake = python-final.callPackage ./pkgs/firedrake {
               inherit mpi4py petsc pylit recursivenodes;}; 
           })
         ];
@@ -59,7 +59,7 @@
       packages.${system} = rec {
         hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
         dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
-        fenicsx = pkgs.python3Packages.callPackage ./pkgs/fenicsx {
+        fenicsx = pkgs.python311Packages.callPackage ./pkgs/fenicsx {
           inherit mpi petsc petsc4py mpi4py nanobind;
         };
         ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
