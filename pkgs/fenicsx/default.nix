@@ -56,6 +56,10 @@ let
       nanobind
     ];
 
+    buildInputs = [
+      nanobind
+    ];
+
     cmakeFlags = [
       "-DCMAKE_BUILD_TYPE=Release"
     ];
