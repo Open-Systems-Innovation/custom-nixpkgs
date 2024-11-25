@@ -70,12 +70,53 @@ let
     };
  };
 
+ # basix = buildPythonPackage rec {
+ #   pname = "basix";
+ #   inherit version;
+
+ #   src = basix-cpp-core.src;
+
+ #   sourceRoot = "${src.name}/python";
+
+ #   format = "pyproject";
+
+ #   build-system = [ setuptools ];
+
+ #   propagatedBuildInputs = [
+ #     basix-cpp-core
+ #     scikit-build-core
+ #     pathspec
+ #     pyproject-metadata
+ #     numpy
+ #   ];
+ #
+ #   nativeBuildInputs = [
+ #     cmake
+ #     ninja
+ #   ];   
+
+ #  ## postPatch = ''
+ #  ##   sed -i 's|\.\./COPYING*|COPYING|' pyproject.toml
+ #  ##   cp ../COPYING* .
+ #  ## '';
+
+ #   preBuild = ''
+ #     cd ..
+ #   '';
+
+ #   meta = with lib; {
+ #     description = "Next generation FEniCS Form Compiler for finite element forms";
+ #     homepage = "https://github.com/FEniCS/ffcx";
+ #     maintainers = with maintainers; [  ];
+ #   };
+ # };
+  
   basix = buildPythonPackage rec {
     pname = "fenics_basix";
     inherit version;
 
     format = "pyproject";
-    
+
     src = fetchPypi {
       inherit pname version;
       sha256 = "sha256-KiHhWo7Y86kZRnUq/QWBYIWaL1YE32WlOya8lsMsDtQ=";
@@ -84,13 +125,15 @@ let
     build-system = [ setuptools ];
 
     propagatedBuildInputs = [
-      basix-cpp-core
+      #basix-cpp-core
+      nanobind
+      blas
       scikit-build-core
       pathspec
       pyproject-metadata
       numpy
     ];
- 
+
     nativeBuildInputs = [
       cmake
       ninja
@@ -106,8 +149,7 @@ let
       maintainers = with maintainers; [  ];
     };
   };
-  
-  #ufl = callPackage ./ufl.nix { };
+
   ufl = buildPythonPackage rec {
     pname = "ufl";
     version = "2024.2.0";
@@ -195,10 +237,6 @@ let
     nativeBuildInputs = [
       cmake
     ];
-
-    #preConfigure= ''
-    #  cd cpp
-    #''; 
 
     cmakeFlags = [
       "-DDOLFINX_SKIP_BUILD_TESTS=on" # or else it cant find Scotch
