@@ -11,7 +11,7 @@
   petsc,
   petsc4py,
   cmake,
-  python311,
+  python3,
   pkg-config,
   pugixml,
   setuptools,
@@ -26,6 +26,7 @@
   pathspec,
   pyproject-metadata,
   scikit-build-core,
+  python312Packages
 }:
 
 let
@@ -35,40 +36,40 @@ let
 
   scotch' = (scotch.override { inherit mpi; });
 
-  basix-cpp-core = stdenv.mkDerivation rec {
-    pname = "basix";
-    inherit version;
-
-    src = fetchFromGitHub {
-      owner = "FEniCS";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "sha256-jLQMDt6zdl+oixd5Qevn4bvxBsXpTNcbH2Os6TC9sRQ=";
-    };
-
-    sourceRoot = "${src.name}/cpp";
-
-    nativeBuildInputs = [
-      cmake
-      ninja
-    ];
-
-    propagatedBuildInputs = [
-      blas
-      nanobind
-    ];
-
-    cmakeFlags = [
-      "-DCMAKE_BUILD_TYPE=Release"
-    ];
-
-    meta = with lib; {
-      description = "FEniCSx finite element basis evaluation library";
-      homepage = "https://github.com/FEniCS/basix";
-      license = licenses.mit;
-      maintainers = with maintainers; [  ];
-    };
- };
+#  basix-cpp-core = stdenv.mkDerivation rec {
+#    pname = "basix";
+#    inherit version;
+#
+#    src = fetchFromGitHub {
+#      owner = "FEniCS";
+#      repo = pname;
+#      rev = "v${version}";
+#      sha256 = "sha256-jLQMDt6zdl+oixd5Qevn4bvxBsXpTNcbH2Os6TC9sRQ=";
+#    };
+#
+#    sourceRoot = "${src.name}/cpp";
+#
+#    nativeBuildInputs = [
+#      cmake
+#      ninja
+#    ];
+#
+#    propagatedBuildInputs = [
+#      blas
+#      nanobind
+#    ];
+#
+#    cmakeFlags = [
+#      "-DCMAKE_BUILD_TYPE=Release"
+#    ];
+#
+#    meta = with lib; {
+#      description = "FEniCSx finite element basis evaluation library";
+#      homepage = "https://github.com/FEniCS/basix";
+#      license = licenses.mit;
+#      maintainers = with maintainers; [  ];
+#    };
+# };
 
  # basix = buildPythonPackage rec {
  #   pname = "basix";
@@ -126,6 +127,7 @@ let
 
     propagatedBuildInputs = [
       #basix-cpp-core
+      python3
       nanobind
       blas
       scikit-build-core
