@@ -94,6 +94,7 @@
 
     packages.${system} = rec {
       hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
+      numpy2 = pkgs.callPackage ./pkgs/numpy2 { };
       dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
       fenicsx = pkgs.python311Packages.callPackage ./pkgs/fenicsx {
         inherit mpi petsc petsc4py mpi4py nanobind;
@@ -113,7 +114,7 @@
       pylit = pkgs.python3Packages.callPackage ./pkgs/pylit { };
       recursivenodes = pkgs.python3Packages.callPackage ./pkgs/recursivenodes { };
       firedrake = pkgs.python3Packages.callPackage ./pkgs/firedrake {
-        inherit mpi4py petsc pylit recursivenodes; }; 
+        inherit mpi4py petsc pylit recursivenodes nanobind; }; 
       waybar-weather = pkgs.callPackage ./pkgs/waybar-weather { };
     };
   };

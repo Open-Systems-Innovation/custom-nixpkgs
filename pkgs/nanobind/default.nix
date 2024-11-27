@@ -18,7 +18,7 @@
 }:
 buildPythonPackage rec {
   pname = "nanobind";
-  version = "2.0.0";
+  version = "2.2.0";
   pyproject = true;
 
   src = fetchFromGitHub {
