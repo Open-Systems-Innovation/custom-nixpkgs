@@ -4,7 +4,6 @@
   buildPythonPackage,
   fetchFromGitHub,
   fetchPypi,
-
   boost,
   blas,
   mpi4py,
@@ -25,7 +24,8 @@
   pathspec,
   pyproject-metadata,
   scikit-build-core,
-  python312Packages
+  openssh,
+  openmpi,
 }:
 
 let
@@ -143,6 +143,8 @@ let
       cd ..
     '';
 
+    pythonImportsCheck = [ "basix" ];
+
     meta = with lib; {
       description = "Next generation FEniCS Form Compiler for finite element forms";
       homepage = "https://github.com/FEniCS/ffcx";
@@ -207,6 +209,8 @@ let
       cd ../..
     '';
     
+    pythonImportsCheck = [ "ffcx" ];
+
     meta = with lib; {
       description = "Next generation FEniCS Form Compiler for finite element forms";
       homepage = "https://github.com/FEniCS/ffcx";
@@ -249,6 +253,7 @@ let
       "-DCMAKE_BUILD_TYPE=Release"
       "-DCMAKE_INSTALL_LIBDIR=lib"
       "-DCMAKE_INSTALL_INCLUDEDIR=include"
+      "-DCMAKE_INSTALL_PREFIX=${placeholder "out"}"
     ];
   };
 
@@ -256,6 +261,8 @@ let
     pname = "dolfinx";
     inherit version;
 
+    NIX_DEBUG = 3;
+    
     format = "pyproject";
 
     src = dolfinx-cpp-core.src;
@@ -265,6 +272,8 @@ let
     propagatedBuildInputs = [
       dolfinx-cpp-core
       mpi
+      openssh
+      openmpi
     ];
     
     nativeBuildInputs = [
@@ -289,6 +298,9 @@ let
       ls
       cd ..
     '';
+
+    #pythonImportsCheck = [ "dolfinx" ];
+    doCheck = false; # Tries to orte_ess_init and call ssh to localhost
 
     meta = {
       description = "Next generation FEniCS problem solving environment";
