@@ -20,12 +20,10 @@
         ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
         hypre = prev.callPackage ./pkgs/hypre/package.nix { };
-        mpi = prev.callPackage ./pkgs/mpi { };
+        #mpi = prev.callPackage ./pkgs/mpi { };
         scotch = prev.callPackage ./pkgs/scotch/package.nix { };
         #libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-        petsc = prev.callPackage ./pkgs/petsc {
-          inherit mpi;
-        };
+        petsc = prev.callPackage ./pkgs/petsc { };
         petsc-project = prev.callPackage ./pkgs/petsc-project/package.nix { };
         petscrc-update = prev.callPackage ./pkgs/petscrc-update/package.nix { };
         waybar-weather = prev.callPackage ./pkgs/waybar-weather { };
@@ -36,7 +34,7 @@
         python311 = prev.python311.override {
           packageOverrides = py-final: _: rec {
             fenicsx = py-final.callPackage ./pkgs/fenicsx {
-              inherit mpi petsc petsc4py mpi4py;
+              inherit petsc petsc4py mpi4py;
             };
 
             mpi4py = py-final.callPackage ./pkgs/mpi4py { };
@@ -46,7 +44,7 @@
 #        pythonPackagesOverlays = (prev.pythonPackagesOverlays or [ ]) ++ [
 #          (python-final: python-prev: rec { 
 #            fenicsx = python-final.callPackage ./pkgs/fenicsx {
-#              inherit mpi petsc petsc4py mpi4py nanobind;
+#              inherit petsc petsc4py mpi4py nanobind;
 #            };
 #            pylit = python-final.callPackage ./pkgs/pylit { };
 #            mpi4py = python-final.callPackage ./pkgs/mpi4py { };
@@ -72,7 +70,7 @@
 #        (python-final: python-prev: rec {
 #          # Custom Python packages
 #          fenicsx = python-prev.fenicsx.callPackage ./pkgs/fenicsx {
-#            inherit mpi petsc petsc4py mpi4py nanobind;
+#            inherit petsc petsc4py mpi4py nanobind;
 #          };
 #          pylit = python-final.callPackage ./pkgs/pylit { };
 #          mpi4py = python-final.callPackage ./pkgs/mpi4py { };
@@ -94,16 +92,16 @@
 
     packages.${system} = rec {
       hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
-      numpy2 = pkgs.callPackage ./pkgs/numpy2 { };
+      asciimatics2 = pkgs.python3Packages.callPackage ./pkgs/numpy2 { };
       dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
       fenicsx = pkgs.python311Packages.callPackage ./pkgs/fenicsx {
-        inherit mpi petsc petsc4py mpi4py nanobind;
+        inherit petsc petsc4py mpi4py nanobind;
       };
       ergogen = pkgs.callPackage ./pkgs/ergogen/package.nix { };
       hypre = pkgs.callPackage ./pkgs/hypre/package.nix { };
       scotch = pkgs.callPackage ./pkgs/scotch/package.nix { };
       libspatialindex = pkgs.callPackage ./pkgs/libspatialindex/package.nix { };
-      mpi = pkgs.callPackage ./pkgs/mpi { };
+      #mpi = pkgs.callPackage ./pkgs/mpi { };
       mpi4py = pkgs.python3Packages.callPackage ./pkgs/mpi4py { };
       nanobind = pkgs.python3Packages.callPackage ./pkgs/nanobind { };
       petsc = pkgs.callPackage ./pkgs/petsc { };
