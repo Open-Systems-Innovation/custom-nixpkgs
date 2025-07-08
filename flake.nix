@@ -16,7 +16,6 @@
     in
     {
       overlays.default = final: prev: rec {
-	cppimport = prev.callPackage ./pkgs/cppimport/package.nix { };
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
         ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
@@ -32,12 +31,13 @@
         #petsc4py = prev.python311Packages.callPackage ./pkgs/petsc4py { inherit petsc; };
         
         #mpi4py = prev.python311Packages.callPackage ./pkgs/mpi4py { };
-        python311 = prev.python311.override {
+        python311 = prev.python3.override {
           packageOverrides = py-final: _: rec {
             fenicsx = py-final.callPackage ./pkgs/fenicsx {
               inherit petsc petsc4py mpi4py;
             };
 
+	    cppimport = py-final.callPackage ./pkgs/cppimport/package.nix { };
             mpi4py = py-final.callPackage ./pkgs/mpi4py { };
             petsc4py = py-final.callPackage ./pkgs/petsc4py { inherit petsc; };
           };
@@ -92,7 +92,7 @@
     };
 
     packages.${system} = rec {
-      cppimport = pkgs.callPackage ./pkgs/cppimport/package.nix { };
+      cppimport = pkgs.python3Packages.callPackage ./pkgs/cppimport/package.nix { };
       hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
       asciimatics2 = pkgs.python3Packages.callPackage ./pkgs/numpy2 { };
       dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
