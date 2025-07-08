@@ -1,6 +1,6 @@
 {
   lib,
-  python3Packages,
+  python311Packages,
   buildPythonPackage,
   fetchPypi
 }:
@@ -15,7 +15,7 @@ buildPythonPackage rec {
     hash = "sha256-u7SVcQLbQbyZrXLCM7zpL50f2RvjUvwHh4xDYQM6QB8="; # Replace with actual sha256 from `nix-prefetch` or let Nix fail and show it
   };
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python311Packages; [
     mako
     pybind11
     filelock
