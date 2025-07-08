@@ -16,6 +16,7 @@
     in
     {
       overlays.default = final: prev: rec {
+	cppimport = prev.callPackage ./pkgs/cppimport/package.nix { };
         dev-env = prev.callPackage ./pkgs/dev-env/package.nix { }; 
         ergogen = prev.callPackage ./pkgs/ergogen/package.nix { };
         hello-nix = prev.callPackage ./pkgs/hello-nix/package.nix { }; 
@@ -91,6 +92,7 @@
     };
 
     packages.${system} = rec {
+      cppimport = pkgs.callPackage ./pkgs/cppimport/package.nix { };
       hello-nix = pkgs.callPackage ./pkgs/hello-nix/package.nix { }; 
       asciimatics2 = pkgs.python3Packages.callPackage ./pkgs/numpy2 { };
       dev-env = pkgs.callPackage ./pkgs/dev-env/package.nix { };
