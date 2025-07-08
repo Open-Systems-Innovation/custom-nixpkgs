@@ -23,7 +23,7 @@ buildPythonPackage rec {
     setuptools_scm
   ];
 
-  buildInputs = [ mako pybind11 filelock ];
+  propagatedBuildInputs = [ mako pybind11 filelock ];
 
   doCheck = false;
   pythonImportsCheck = [ "cppimport" ];
