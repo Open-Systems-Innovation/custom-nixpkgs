@@ -31,7 +31,7 @@
         #petsc4py = prev.python311Packages.callPackage ./pkgs/petsc4py { inherit petsc; };
         
         #mpi4py = prev.python311Packages.callPackage ./pkgs/mpi4py { };
-        python311 = prev.python3.override {
+        python311 = prev.python311.override {
           packageOverrides = py-final: _: rec {
             fenicsx = py-final.callPackage ./pkgs/fenicsx {
               inherit petsc petsc4py mpi4py;
