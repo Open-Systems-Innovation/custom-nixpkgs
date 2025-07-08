@@ -1,6 +1,8 @@
 { lib
 , buildPythonPackage
 , fetchPypi
+, setuptools
+, wheel
 , mako
 , pybind11
 , filelock
@@ -16,11 +18,9 @@ buildPythonPackage rec {
     hash = "sha256-u7SVcQLbQbyZrXLCM7zpL50f2RvjUvwHh4xDYQM6QB8=";
   };
 
-  propagatedBuildInputs = [
-    mako
-    pybind11
-    filelock
-  ];
+  nativeBuildInputs = [ setuptools wheel ];
+
+  propagatedBuildInputs = [ mako pybind11 filelock ];
 
   doCheck = false;
   pythonImportsCheck = [ "cppimport" ];
@@ -31,3 +31,4 @@ buildPythonPackage rec {
     license = licenses.mit;
   };
 }
+
