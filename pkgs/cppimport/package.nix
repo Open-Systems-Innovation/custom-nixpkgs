@@ -11,14 +11,11 @@
 buildPythonPackage rec {
   pname = "cppimport";
   version = "22.8.2";
-  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-u7SVcQLbQbyZrXLCM7zpL50f2RvjUvwHh4xDYQM6QB8=";
   };
-
-  nativeBuildInputs = [ setuptools wheel ];
 
   propagatedBuildInputs = [ mako pybind11 filelock ];
 
