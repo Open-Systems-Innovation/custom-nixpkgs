@@ -1,23 +1,29 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-, wheel
-, mako
-, pybind11
-, filelock
+{ lib,
+  buildPythonPackage,
+  fetchPypi,
+  setuptools,
+  mako,
+  pybind11,
+  filelock,
+  setuptools_scm,
 }:
 
 buildPythonPackage rec {
   pname = "cppimport";
   version = "22.8.2";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-u7SVcQLbQbyZrXLCM7zpL50f2RvjUvwHh4xDYQM6QB8=";
   };
 
-  propagatedBuildInputs = [ mako pybind11 filelock ];
+  build-system = [
+    setuptools
+    setuptools_scm
+  ];
+
+  buildInputs = [ mako pybind11 filelock ];
 
   doCheck = false;
   pythonImportsCheck = [ "cppimport" ];
